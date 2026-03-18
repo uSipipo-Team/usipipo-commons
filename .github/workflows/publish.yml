@@ -1,0 +1,39 @@
+name: Publish to GitHub Packages
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: pypi
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.13"
+          enable-cache: true
+      
+      - name: Install dependencies
+        run: uv sync --dev
+      
+      - name: Run tests
+        run: uv run pytest -v
+      
+      - name: Build package
+        run: uv build
+      
+      - name: Publish to GitHub Packages
+        run: uv publish --publish-url https://pypi.pkg.github.com
+        env:
+          UV_PUBLISH_USERNAME: __token__
+          UV_PUBLISH_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
