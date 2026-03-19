@@ -1,6 +1,6 @@
 [project]
 name = "usipipo-commons"
-version = "0.1.0"
+version = "0.2.0"
 description = "Shared library for uSipipo ecosystem"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -36,3 +36,9 @@ target-version = "py313"
 python_version = "3.13"
 warn_return_any = true
 warn_unused_configs = true
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit>=3.6.0",
+    "bandit>=1.7.0",
+]

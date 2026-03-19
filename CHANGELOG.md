@@ -33,6 +33,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.2.0] - 2026-03-19
+
+### ✨ Added
+
+#### Code Quality
+- Pre-commit hooks configuration (ruff, mypy, bandit)
+- GitHub Actions CI/CD pipeline for automated testing
+- Mypy type checking configuration
+- Comprehensive documentation structure
+
+### 🔧 Changed
+
+#### Pydantic v2 Migration
+- **Migrated from `class Config` to `model_config`** - Updated all schemas to use Pydantic v2 syntax
+- `UserResponse` - Updated to use `ConfigDict(from_attributes=True)`
+- `VpnKeyResponse` - Updated to use `ConfigDict(from_attributes=True)`
+- `PaymentResponse` - Updated to use `ConfigDict(from_attributes=True)`
+
+#### Dependencies
+- Updated `pydantic>=2.12.0` (from v1 to v2)
+- Added `pydantic-core` for v2 compatibility
+
+### 📝 Documentation
+
+- Added `docs/` directory structure
+- API documentation templates
+- Development guidelines
+
+### 🔒 Security
+
+- Added bandit for security scanning in CI/CD
+- Pre-commit hooks for automated security checks
+
+---
+
 ## [0.1.0] - 2026-03-18
 
 ### Added
