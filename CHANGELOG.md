@@ -33,6 +33,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.3.0] - 2026-03-20
+
+### Added
+- **Crypto Payment Entities** 🎉
+  - `CryptoOrder` entity with order management methods
+  - `CryptoTransaction` entity with confirmation tracking
+  - `WebhookToken` entity for webhook validation
+- **New Enums**
+  - `CryptoOrderStatus` (PENDING, COMPLETED, FAILED, EXPIRED)
+  - `CryptoTransactionStatus` (PENDING, CONFIRMING, COMPLETED, FAILED)
+- **Entity Methods**
+  - `CryptoOrder.create()` factory method
+  - `CryptoOrder.mark_completed()`, `mark_failed()`, `mark_expired()`
+  - `CryptoTransaction.add_confirmation()` with completion check
+  - `WebhookToken.is_valid()` for token expiration check
+- **Constants**
+  - `CRYPTO_CONFIRMATIONS_REQUIRED = 15` for blockchain confirmations
+  - `WEBHOOK_TOKEN_EXPIRY_MINUTES = 30` for webhook security
+
+### Changed
+- Fixed `CryptoOrder` dataclass field ordering (user_id moved to end with default)
+
+### Project Structure
+```
+usipipo_commons/
+├── domain/
+│   ├── entities/      # User, VpnKey, Payment, CryptoOrder, CryptoTransaction, WebhookToken
+│   └── enums/         # VpnType, KeyStatus, PaymentStatus, PaymentMethod, CryptoOrderStatus, CryptoTransactionStatus
+├── schemas/           # Pydantic request/response models
+├── constants/         # Plans, bonuses, error codes, crypto constants
+└── utils/             # Validators, formatters
+```
+
+---
+
+## [0.2.0] - 2026-03-19
+
+### Added
+- **Crypto Payment Support**
+  - `CryptoOrder` entity for tracking crypto orders
+  - `CryptoTransaction` entity for blockchain transactions
+  - `WebhookToken` entity for webhook validation
+  - `CryptoOrderStatus` enum
+  - `CryptoTransactionStatus` enum
+
+---
+
 ## [0.1.0] - 2026-03-18
 
 ### Added
@@ -69,6 +116,6 @@ usipipo_commons/
 
 ## Links
 
-- [GitHub Repository](https://github.com/usipipo/usipipo-commons)
-- [GitHub Packages](https://github.com/orgs/usipipo/packages)
-- [Issue Tracker](https://github.com/usipipo/usipipo-commons/issues)
+- [GitHub Repository](https://github.com/uSipipo-Team/usipipo-commons)
+- [PyPI Package](https://pypi.org/project/usipipo-commons/)
+- [Issue Tracker](https://github.com/uSipipo-Team/usipipo-commons/issues)

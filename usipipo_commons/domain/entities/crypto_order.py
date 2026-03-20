@@ -19,7 +19,6 @@ class CryptoOrder:
     """
 
     id: uuid.UUID = field(default_factory=uuid.uuid4)
-    user_id: uuid.UUID
     package_type: str = "basic"
     amount_usdt: float = 0.0
     wallet_address: str = ""
@@ -32,6 +31,7 @@ class CryptoOrder:
     )
     tx_hash: Optional[str] = None
     confirmed_at: Optional[datetime] = None
+    user_id: uuid.UUID = field(default_factory=uuid.uuid4)
 
     @property
     def is_pending(self) -> bool:
