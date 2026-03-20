@@ -38,6 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **Complete Entity Library** 🎉 - All entities ported from monorepo:
   - **Admin Entities**: `AdminUserInfo`, `AdminKeyInfo`, `ServerStatus`, `AdminOperationResult`
+  - **Balance Entity**: `Balance` with add/subtract/has_sufficient methods
+  - **Consumption Billing Entities**: `ConsumptionBilling`, `BillingStatus`, `ConsumptionInvoice`, `InvoiceStatus`, `PaymentMethod`
   - **Data Package Entities**: `DataPackage`, `PackageType` enum
   - **Subscription Entities**: `SubscriptionPlan`, `PlanType` enum, `SubscriptionTransaction`, `SubscriptionTransactionStatus` enum
   - **Ticket/Support Entities**: `Ticket`, `TicketCategory`, `TicketPriority`, `TicketStatus`, `TicketMessage`
@@ -47,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `PlanType` (ONE_MONTH, THREE_MONTHS, SIX_MONTHS)
   - `TicketCategory`, `TicketPriority`, `TicketStatus`
   - `SubscriptionTransactionStatus`
+  - `BillingStatus`, `InvoiceStatus`, `PaymentMethod`
 
 ### Changed
 - **VpnKey Entity**: Fully ported from monorepo with all methods:
@@ -60,19 +63,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ```
 usipipo_commons/
 ├── domain/
-│   ├── entities/      # 13 entities + 2 value objects
-│   │   ├── User, VpnKey, Payment
-│   │   ├── CryptoOrder, CryptoTransaction, WebhookToken
-│   │   ├── AdminUserInfo, AdminKeyInfo, ServerStatus, AdminOperationResult
-│   │   ├── DataPackage, PackageType
-│   │   ├── SubscriptionPlan, SubscriptionTransaction
-│   │   └── Ticket, TicketMessage
-│   └── enums/         # 11 enums
+│   ├── entities/      # 14 entities + 3 value objects
+│   │   ├── Core: User, VpnKey, Payment, Balance
+│   │   ├── Crypto: CryptoOrder, CryptoTransaction, WebhookToken
+│   │   ├── Admin: AdminUserInfo, AdminKeyInfo, ServerStatus, AdminOperationResult
+│   │   ├── Consumption: ConsumptionBilling, ConsumptionInvoice
+│   │   ├── Data Package: DataPackage
+│   │   ├── Subscription: SubscriptionPlan, SubscriptionTransaction
+│   │   └── Support: Ticket, TicketMessage
+│   └── enums/         # 14 enums
 │       ├── VpnType, KeyType, KeyStatus
 │       ├── PaymentStatus, PaymentMethod
 │       ├── CryptoOrderStatus, CryptoTransactionStatus
 │       ├── PackageType, PlanType
-│       └── TicketCategory, TicketPriority, TicketStatus, SubscriptionTransactionStatus
+│       ├── TicketCategory, TicketPriority, TicketStatus
+│       ├── BillingStatus, InvoiceStatus
+│       └── SubscriptionTransactionStatus
 ├── schemas/           # Pydantic request/response models
 ├── constants/         # Plans, bonuses, error codes, crypto constants
 └── utils/             # Validators, formatters

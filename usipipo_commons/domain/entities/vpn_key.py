@@ -143,3 +143,21 @@ class VpnKey:
         """Agrega uso de datos."""
         self.used_bytes += bytes_used
         self.last_seen_at = datetime.now(timezone.utc)
+
+    def to_dict(self) -> dict:
+        """Convierte la entidad a diccionario."""
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "name": self.name,
+            "key_type": self.key_type.value,
+            "key_data": self.key_data,
+            "external_id": self.external_id,
+            "is_active": self.is_active,
+            "created_at": self.created_at.isoformat(),
+            "expires_at": self.expires_at.isoformat() if self.expires_at else None,
+            "last_seen_at": self.last_seen_at.isoformat() if self.last_seen_at else None,
+            "used_bytes": self.used_bytes,
+            "data_limit_bytes": self.data_limit_bytes,
+            "billing_reset_at": self.billing_reset_at.isoformat(),
+        }
