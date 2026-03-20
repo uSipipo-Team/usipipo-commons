@@ -33,6 +33,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.4.0] - 2026-03-20
+
+### Added
+- **Complete Entity Library** 🎉 - All entities ported from monorepo:
+  - **Admin Entities**: `AdminUserInfo`, `AdminKeyInfo`, `ServerStatus`, `AdminOperationResult`
+  - **Data Package Entities**: `DataPackage`, `PackageType` enum
+  - **Subscription Entities**: `SubscriptionPlan`, `PlanType` enum, `SubscriptionTransaction`, `SubscriptionTransactionStatus` enum
+  - **Ticket/Support Entities**: `Ticket`, `TicketCategory`, `TicketPriority`, `TicketStatus`, `TicketMessage`
+- **New Enums**:
+  - `KeyType` (OUTLINE, WIREGUARD)
+  - `PackageType` (BASIC, ESTANDAR, AVANZADO, PREMIUM, UNLIMITED)
+  - `PlanType` (ONE_MONTH, THREE_MONTHS, SIX_MONTHS)
+  - `TicketCategory`, `TicketPriority`, `TicketStatus`
+  - `SubscriptionTransactionStatus`
+
+### Changed
+- **VpnKey Entity**: Fully ported from monorepo with all methods:
+  - `used_mb`, `used_gb`, `data_limit_gb` properties
+  - `remaining_bytes`, `is_over_limit` properties
+  - `needs_reset()`, `reset_billing_cycle()`, `add_usage()` methods
+  - `__post_init__` for datetime normalization
+- Fixed field ordering in dataclasses for Python 3.13 compatibility
+
+### Project Structure
+```
+usipipo_commons/
+├── domain/
+│   ├── entities/      # 13 entities + 2 value objects
+│   │   ├── User, VpnKey, Payment
+│   │   ├── CryptoOrder, CryptoTransaction, WebhookToken
+│   │   ├── AdminUserInfo, AdminKeyInfo, ServerStatus, AdminOperationResult
+│   │   ├── DataPackage, PackageType
+│   │   ├── SubscriptionPlan, SubscriptionTransaction
+│   │   └── Ticket, TicketMessage
+│   └── enums/         # 11 enums
+│       ├── VpnType, KeyType, KeyStatus
+│       ├── PaymentStatus, PaymentMethod
+│       ├── CryptoOrderStatus, CryptoTransactionStatus
+│       ├── PackageType, PlanType
+│       └── TicketCategory, TicketPriority, TicketStatus, SubscriptionTransactionStatus
+├── schemas/           # Pydantic request/response models
+├── constants/         # Plans, bonuses, error codes, crypto constants
+└── utils/             # Validators, formatters
+```
+
+---
+
 ## [0.3.0] - 2026-03-20
 
 ### Added
