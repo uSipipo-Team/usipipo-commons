@@ -4,6 +4,9 @@ from .payment import Payment
 from .crypto_order import CryptoOrder
 from .crypto_transaction import CryptoTransaction, WebhookToken
 from .admin import AdminUserInfo, AdminKeyInfo, ServerStatus, AdminOperationResult
+from .balance import Balance
+from .consumption_billing import ConsumptionBilling, BillingStatus
+from .consumption_invoice import ConsumptionInvoice, InvoiceStatus, PaymentMethod
 from .data_package import DataPackage, PackageType
 from .subscription_plan import SubscriptionPlan, PlanType
 from .subscription_transaction import SubscriptionTransaction, SubscriptionTransactionStatus
@@ -15,6 +18,7 @@ __all__ = [
     "User",
     "VpnKey",
     "Payment",
+    "Balance",
     # Crypto payment entities
     "CryptoOrder",
     "CryptoTransaction",
@@ -24,6 +28,12 @@ __all__ = [
     "AdminKeyInfo",
     "ServerStatus",
     "AdminOperationResult",
+    # Consumption billing entities
+    "ConsumptionBilling",
+    "BillingStatus",
+    "ConsumptionInvoice",
+    "InvoiceStatus",
+    "PaymentMethod",
     # Data package entities
     "DataPackage",
     "PackageType",
