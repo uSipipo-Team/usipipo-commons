@@ -33,6 +33,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.4.1] - 2026-03-20
+
+### Fixed
+- **VpnKey Entity**: Added `to_dict()` method for serialization
+- **Tests**: Updated VpnKey tests to use new entity structure:
+  - Changed `vpn_type` to `key_type`
+  - Changed `user_id` from UUID to int (telegram_id)
+  - Updated test fixtures to match monorepo entity structure
+- All 33 tests passing ✅
+
+---
+
 ## [0.4.0] - 2026-03-20
 
 ### Added
