@@ -5,6 +5,7 @@ from .invoice_status import InvoiceStatus
 from .key_status import KeyStatus
 from .payment_method import PaymentMethod
 from .payment_status import PaymentStatus
+from .plan_type import PlanType
 from .vpn_type import VpnType
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
     "InvoiceStatus",
     "ConsumptionPaymentMethod",
     "CryptoOrderStatus",
+    "PlanType",
 ]

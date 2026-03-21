@@ -1,7 +1,25 @@
 """uSipipo Commons - Shared library for uSipipo ecosystem."""
 
-from usipipo_commons.domain.entities import User, VpnKey, Payment
-from usipipo_commons.domain.enums import VpnType, KeyStatus, PaymentStatus, PaymentMethod
+from usipipo_commons.domain.entities import (
+    User,
+    VpnKey,
+    Payment,
+    ConsumptionBilling,
+    ConsumptionInvoice,
+    CryptoOrder,
+    SubscriptionPlan,
+)
+from usipipo_commons.domain.enums import (
+    VpnType,
+    KeyStatus,
+    PaymentStatus,
+    PaymentMethod,
+    BillingStatus,
+    InvoiceStatus,
+    ConsumptionPaymentMethod,
+    CryptoOrderStatus,
+    PlanType,
+)
 from usipipo_commons.schemas import (
     UserResponse,
     UserCreateRequest,
@@ -33,17 +51,26 @@ from usipipo_commons.utils import (
     format_duration,
 )
 
-__version__ = "0.1.0"
+__version__ = "0.5.3"
 __all__ = [
     # Entities
     "User",
     "VpnKey",
     "Payment",
+    "ConsumptionBilling",
+    "ConsumptionInvoice",
+    "CryptoOrder",
+    "SubscriptionPlan",
     # Enums
     "VpnType",
     "KeyStatus",
     "PaymentStatus",
     "PaymentMethod",
+    "BillingStatus",
+    "InvoiceStatus",
+    "ConsumptionPaymentMethod",
+    "CryptoOrderStatus",
+    "PlanType",
     # Schemas
     "UserResponse",
     "UserCreateRequest",
