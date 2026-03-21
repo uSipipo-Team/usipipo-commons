@@ -1,6 +1,6 @@
 [project]
 name = "usipipo-commons"
-version = "0.5.2"
+version = "0.5.3"
 description = "Shared library for uSipipo ecosystem"
 readme = "README.md"
 requires-python = ">=3.13"

@@ -1,5 +1,6 @@
 from .billing_status import BillingStatus
 from .consumption_payment_method import ConsumptionPaymentMethod
+from .crypto_order_status import CryptoOrderStatus
 from .invoice_status import InvoiceStatus
 from .key_status import KeyStatus
 from .payment_method import PaymentMethod
@@ -14,4 +15,5 @@ __all__ = [
     "BillingStatus",
     "InvoiceStatus",
     "ConsumptionPaymentMethod",
+    "CryptoOrderStatus",
 ]

@@ -4,8 +4,8 @@ from datetime import datetime, timezone
 from decimal import Decimal
 from uuid import uuid4
 
-from usipipo_commons.domain.entities import User, VpnKey, Payment, ConsumptionBilling, ConsumptionInvoice
-from usipipo_commons.domain.enums import VpnType, KeyStatus, PaymentStatus, PaymentMethod, BillingStatus, InvoiceStatus, ConsumptionPaymentMethod
+from usipipo_commons.domain.entities import User, VpnKey, Payment, ConsumptionBilling, ConsumptionInvoice, CryptoOrder
+from usipipo_commons.domain.enums import VpnType, KeyStatus, PaymentStatus, PaymentMethod, BillingStatus, InvoiceStatus, ConsumptionPaymentMethod, CryptoOrderStatus
 
 
 class TestUser:
@@ -349,3 +349,71 @@ class TestConsumptionInvoice:
         masked = invoice._mask_wallet_address()
 
         assert masked == "0x1234...5678"
+
+
+class TestCryptoOrder:
+    """Tests para la entidad CryptoOrder."""
+
+    def test_crypto_order_creation(self):
+        """Test para crear una orden crypto."""
+        user_id = uuid4()
+        order = CryptoOrder(
+            id=uuid4(),
+            user_id=user_id,
+            package_type="basic",
+            amount_usdt=10.0,
+            wallet_address="TXm4M8z5VrX9z2Y1wP6sK3nR8jL9hT7",
+            tron_dealer_order_id="TRO-12345",
+            status=CryptoOrderStatus.PENDING,
+            created_at=datetime.now(),
+            expires_at=datetime.now(),
+            tx_hash=None,
+            confirmed_at=None,
+        )
+
+        assert order.user_id == user_id
+        assert order.amount_usdt == 10.0
+        assert order.status == CryptoOrderStatus.PENDING
+
+    def test_crypto_order_create_factory(self):
+        """Test para crear orden usando factory method."""
+        user_id = uuid4()
+        order = CryptoOrder.create(
+            user_id=user_id,
+            package_type="premium",
+            amount_usdt=25.0,
+            wallet_address="TXm4M8z5VrX9z2Y1wP6sK3nR8jL9hT7",
+        )
+
+        assert order.user_id == user_id
+        assert order.package_type == "premium"
+        assert order.amount_usdt == 25.0
+        assert order.status == CryptoOrderStatus.PENDING
+        assert order.id is not None
+        assert order.created_at is not None
+        assert order.tx_hash is None
+        assert order.confirmed_at is None
+
+    def test_crypto_order_to_dict(self):
+        """Test para convertir orden crypto a diccionario."""
+        order = CryptoOrder.create(
+            user_id=uuid4(),
+            package_type="basic",
+            amount_usdt=10.0,
+            wallet_address="TXm4M8z5VrX9z2Y1wP6sK3nR8jL9hT7",
+        )
+
+        order_dict = order.to_dict()
+
+        assert "id" in order_dict
+        assert order_dict["amount_usdt"] == 10.0
+        assert order_dict["package_type"] == "basic"
+        assert order_dict["status"] == "pending"
+        assert isinstance(order_dict["created_at"], str)
+
+    def test_crypto_order_status_values(self):
+        """Test para verificar valores del enum."""
+        assert CryptoOrderStatus.PENDING.value == "pending"
+        assert CryptoOrderStatus.COMPLETED.value == "completed"
+        assert CryptoOrderStatus.FAILED.value == "failed"
+        assert CryptoOrderStatus.EXPIRED.value == "expired"
