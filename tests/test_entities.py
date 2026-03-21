@@ -5,7 +5,7 @@ from decimal import Decimal
 from uuid import uuid4
 
 from usipipo_commons.domain.entities import User, VpnKey, Payment, ConsumptionBilling, ConsumptionInvoice, CryptoOrder
-from usipipo_commons.domain.enums import VpnType, KeyStatus, PaymentStatus, PaymentMethod, BillingStatus, InvoiceStatus, ConsumptionPaymentMethod, CryptoOrderStatus
+from usipipo_commons.domain.enums import KeyType, KeyStatus, PaymentStatus, PaymentMethod, BillingStatus, InvoiceStatus, ConsumptionPaymentMethod, CryptoOrderStatus
 
 
 class TestUser:
@@ -65,45 +65,41 @@ class TestVpnKey:
     def test_vpn_key_creation(self):
         """Test para crear una clave VPN válida."""
         vpn_key = VpnKey(
-            id=uuid4(),
-            user_id=uuid4(),
+            id=str(uuid4()),
+            user_id=123456789,
             name="My VPN",
-            vpn_type=VpnType.WIREGUARD,
-            status=KeyStatus.ACTIVE,
-            config=None,
-            created_at=datetime.now(),
-            expires_at=None,
-            last_used_at=None,
-            data_used_gb=0.0,
-            data_limit_gb=5.0,
+            key_type=KeyType.WIREGUARD,
+            key_data="wireguard-config-placeholder",
+            external_id="wg-external-id-123",
+            is_active=True,
+            created_at=datetime.now(timezone.utc),
+            data_limit_bytes=5 * 1024**3,
         )
 
         assert vpn_key.name == "My VPN"
-        assert vpn_key.vpn_type == VpnType.WIREGUARD
-        assert vpn_key.status == KeyStatus.ACTIVE
+        assert vpn_key.key_type == KeyType.WIREGUARD
+        assert vpn_key.is_active is True
         assert vpn_key.data_limit_gb == 5.0
 
     def test_vpn_key_to_dict(self):
         """Test para convertir clave VPN a diccionario."""
         vpn_key = VpnKey(
-            id=uuid4(),
-            user_id=uuid4(),
+            id=str(uuid4()),
+            user_id=123456789,
             name="My VPN",
-            vpn_type=VpnType.OUTLINE,
-            status=KeyStatus.PENDING,
-            config=None,
-            created_at=datetime.now(),
-            expires_at=None,
-            last_used_at=None,
-            data_used_gb=0.0,
-            data_limit_gb=10.0,
+            key_type=KeyType.OUTLINE,
+            key_data="ss://outline-config-placeholder",
+            external_id="outline-external-id-456",
+            is_active=True,
+            created_at=datetime.now(timezone.utc),
+            data_limit_bytes=10 * 1024**3,
         )
 
         vpn_dict = vpn_key.to_dict()
 
         assert vpn_dict["name"] == "My VPN"
-        assert vpn_dict["vpn_type"] == "outline"
-        assert vpn_dict["status"] == "pending"
+        assert vpn_dict["key_type"] == "outline"
+        assert vpn_dict["is_active"] is True
 
 
 class TestPayment:
