@@ -19,6 +19,11 @@ class User:
     total_purchased_gb: float
     referral_code: str
     referred_by: Optional[UUID]
+    referral_credits: int = 0
+    purchase_count: int = 0
+    loyalty_bonus_percent: int = 0
+    welcome_bonus_used: bool = False
+    referred_users_with_purchase: int = 0
 
     def to_dict(self) -> dict:
         """Convierte a diccionario para serialización."""
@@ -35,4 +40,9 @@ class User:
             "total_purchased_gb": self.total_purchased_gb,
             "referral_code": self.referral_code,
             "referred_by": str(self.referred_by) if self.referred_by else None,
+            "referral_credits": self.referral_credits,
+            "purchase_count": self.purchase_count,
+            "loyalty_bonus_percent": self.loyalty_bonus_percent,
+            "welcome_bonus_used": self.welcome_bonus_used,
+            "referred_users_with_purchase": self.referred_users_with_purchase,
         }
