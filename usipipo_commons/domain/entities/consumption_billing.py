@@ -1,20 +1,10 @@
-"""Consumption billing domain entity."""
-
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from decimal import Decimal
-from enum import Enum
 from typing import Optional
 
-
-class BillingStatus(str, Enum):
-    """Estados posibles de un ciclo de facturación por consumo."""
-
-    ACTIVE = "active"  # Ciclo en curso, consumiendo
-    CLOSED = "closed"  # Ciclo cerrado, esperando pago
-    PAID = "paid"  # Ciclo pagado, completado
-    CANCELLED = "cancelled"  # Ciclo cancelado
+from ..enums.billing_status import BillingStatus
 
 
 @dataclass
@@ -75,16 +65,12 @@ class ConsumptionBilling:
 
     def _recalculate_cost(self) -> None:
         """Recalcula el costo total basado en MB consumidos."""
-        # Costo = MB * precio por MB
         self.total_cost_usd = (self.mb_consumed * self.price_per_mb_usd).quantize(
-            Decimal("0.000001")  # Precisión de 6 decimales
+            Decimal("0.000001")
         )
 
     def close_cycle(self) -> None:
-        """
-        Cierra el ciclo de facturación.
-        Cambia el estado a CLOSED y registra el tiempo de cierre.
-        """
+        """Cierra el ciclo de facturación."""
         if self.status != BillingStatus.ACTIVE:
             raise ValueError("Solo se pueden cerrar ciclos activos")
 
@@ -93,10 +79,7 @@ class ConsumptionBilling:
         self._recalculate_cost()
 
     def mark_as_paid(self) -> None:
-        """
-        Marca el ciclo como pagado.
-        Solo aplicable a ciclos cerrados.
-        """
+        """Marca el ciclo como pagado."""
         if self.status != BillingStatus.CLOSED:
             raise ValueError("Solo se pueden pagar ciclos cerrados")
 

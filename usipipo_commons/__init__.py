@@ -4,17 +4,21 @@ from usipipo_commons.domain.entities import (
     User,
     VpnKey,
     Payment,
+    ConsumptionBilling,
+    ConsumptionInvoice,
     CryptoOrder,
-    CryptoTransaction,
-    WebhookToken,
+    SubscriptionPlan,
 )
 from usipipo_commons.domain.enums import (
     VpnType,
     KeyStatus,
     PaymentStatus,
     PaymentMethod,
+    BillingStatus,
+    InvoiceStatus,
+    ConsumptionPaymentMethod,
     CryptoOrderStatus,
-    CryptoTransactionStatus,
+    PlanType,
 )
 from usipipo_commons.schemas import (
     UserResponse,
@@ -47,22 +51,26 @@ from usipipo_commons.utils import (
     format_duration,
 )
 
-__version__ = "0.2.0"
+__version__ = "0.5.3"
 __all__ = [
     # Entities
     "User",
     "VpnKey",
     "Payment",
+    "ConsumptionBilling",
+    "ConsumptionInvoice",
     "CryptoOrder",
-    "CryptoTransaction",
-    "WebhookToken",
+    "SubscriptionPlan",
     # Enums
     "VpnType",
     "KeyStatus",
     "PaymentStatus",
     "PaymentMethod",
+    "BillingStatus",
+    "InvoiceStatus",
+    "ConsumptionPaymentMethod",
     "CryptoOrderStatus",
-    "CryptoTransactionStatus",
+    "PlanType",
     # Schemas
     "UserResponse",
     "UserCreateRequest",

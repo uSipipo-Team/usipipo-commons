@@ -1,11 +1,8 @@
-"""Crypto order status enum."""
-
 from enum import Enum
 
 
 class CryptoOrderStatus(str, Enum):
-    """Estado de una orden de criptomoneda."""
-
+    """Estados de una orden crypto."""
     PENDING = "pending"
     COMPLETED = "completed"
     FAILED = "failed"

@@ -1,23 +1,15 @@
-"""Subscription plan domain entity."""
+"""Subscription plan entity."""
 
-import uuid
-from dataclasses import dataclass
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Optional
+from datetime import datetime
+from typing import Any
 
+from pydantic import BaseModel
 
-class PlanType(str, Enum):
-    """Subscription plan types."""
-
-    ONE_MONTH = "one_month"
-    THREE_MONTHS = "three_months"
-    SIX_MONTHS = "six_months"
+from usipipo_commons.domain.enums.plan_type import PlanType
 
 
-@dataclass
-class SubscriptionPlan:
-    """Represents an active subscription plan for a user."""
+class SubscriptionPlan(BaseModel):
+    """Entidad de plan de suscripción."""
 
     user_id: int
     plan_type: PlanType
@@ -25,48 +17,22 @@ class SubscriptionPlan:
     payment_id: str
     starts_at: datetime
     expires_at: datetime
-    id: Optional[uuid.UUID] = None
     is_active: bool = True
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
-
-    def __post_init__(self):
-        if self.id is None:
-            self.id = uuid.uuid4()
-        if self.created_at is None:
-            self.created_at = datetime.now(timezone.utc)
-        if self.updated_at is None:
-            self.updated_at = datetime.now(timezone.utc)
-
-    @property
-    def duration_days(self) -> int:
-        """Returns plan duration in days."""
-        duration_map = {
-            PlanType.ONE_MONTH: 30,
-            PlanType.THREE_MONTHS: 90,
-            PlanType.SIX_MONTHS: 180,
-        }
-        return duration_map.get(self.plan_type, 0)
-
-    @property
-    def days_remaining(self) -> int:
-        """Returns days remaining until expiration."""
-        now = datetime.now(timezone.utc)
-        delta = self.expires_at - now
-        return max(0, delta.days)
-
-    @property
-    def is_expiring_soon(self) -> bool:
-        """True if plan expires in less than 3 days."""
-        return self.days_remaining <= 3
 
     @property
     def is_expired(self) -> bool:
-        """True if plan has expired."""
-        now = datetime.now(timezone.utc)
-        return now > self.expires_at
+        """Verifica si la suscripción ha expirado."""
+        return datetime.now(self.starts_at.tzinfo) > self.expires_at
 
-    def deactivate(self) -> None:
-        """Deactivate this subscription plan."""
-        self.is_active = False
-        self.updated_at = datetime.now(timezone.utc)
+    def to_dict(self) -> dict[str, Any]:
+        """Convierte la entidad a diccionario."""
+        return {
+            "user_id": self.user_id,
+            "plan_type": self.plan_type.value,
+            "stars_paid": self.stars_paid,
+            "payment_id": self.payment_id,
+            "starts_at": self.starts_at.isoformat(),
+            "expires_at": self.expires_at.isoformat(),
+            "is_active": self.is_active,
+            "is_expired": self.is_expired,
+        }
