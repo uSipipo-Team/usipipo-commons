@@ -1,7 +1,7 @@
 """Subscription transaction domain entity."""
 
 import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from enum import Enum
 from typing import Optional
@@ -55,6 +55,7 @@ class SubscriptionTransaction:
         """True if transaction has expired."""
         return self.status == SubscriptionTransactionStatus.EXPIRED or (
             self.status == SubscriptionTransactionStatus.PENDING
+            and self.expires_at is not None
             and datetime.now(timezone.utc) > self.expires_at
         )
 

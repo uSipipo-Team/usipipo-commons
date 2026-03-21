@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-03-21
+
+### Added
+- **Ticket System Entities Export**: Exported `Ticket`, `TicketMessage`, `TicketCategory`, `TicketPriority`, `TicketStatus` from `usipipo_commons.domain.entities`
+  - `Ticket` entity with full support ticket workflow (create, update, close, resolve)
+  - `TicketMessage` entity for ticket conversation threads
+  - `TicketCategory` enum: VPN_FAIL, PAYMENT, ACCOUNT, OTHER
+  - `TicketPriority` enum: HIGH, MEDIUM, LOW
+  - `TicketStatus` enum: OPEN, RESPONDED, RESOLVED, CLOSED
+  - Helper properties: `ticket_number`, `is_open`, `is_resolved`, `is_closed`
+  - Status update method: `update_status()`
+
+---
+
 ## [0.5.6] - 2026-03-21
 
 ### Added

@@ -1,5 +1,4 @@
 """Tests para formateadores."""
-import pytest
 from datetime import datetime
 
 from usipipo_commons.utils import (

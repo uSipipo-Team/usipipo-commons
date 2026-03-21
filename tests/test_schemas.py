@@ -1,6 +1,5 @@
 """Tests para schemas Pydantic."""
 import pytest
-from uuid import uuid4
 
 from usipipo_commons.schemas import (
     UserCreateRequest,

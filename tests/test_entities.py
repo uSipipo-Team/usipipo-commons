@@ -1,11 +1,10 @@
 """Tests para entidades del dominio."""
-import pytest
 from datetime import datetime, timezone
 from decimal import Decimal
 from uuid import uuid4
 
 from usipipo_commons.domain.entities import User, VpnKey, Payment, ConsumptionBilling, ConsumptionInvoice, CryptoOrder
-from usipipo_commons.domain.enums import KeyType, KeyStatus, PaymentStatus, PaymentMethod, BillingStatus, InvoiceStatus, ConsumptionPaymentMethod, CryptoOrderStatus
+from usipipo_commons.domain.enums import KeyType, PaymentStatus, PaymentMethod, BillingStatus, InvoiceStatus, ConsumptionPaymentMethod, CryptoOrderStatus
 
 
 class TestUser:

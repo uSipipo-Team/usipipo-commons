@@ -3,6 +3,8 @@ from .consumption_invoice import ConsumptionInvoice
 from .crypto_order import CryptoOrder
 from .payment import Payment
 from .subscription_plan import SubscriptionPlan
+from .ticket import Ticket, TicketCategory, TicketPriority, TicketStatus
+from .ticket_message import TicketMessage
 from .user import User
 from .vpn_key import VpnKey
 
@@ -14,4 +16,9 @@ __all__ = [
     "ConsumptionInvoice",
     "CryptoOrder",
     "SubscriptionPlan",
+    "Ticket",
+    "TicketMessage",
+    "TicketCategory",
+    "TicketPriority",
+    "TicketStatus",
 ]

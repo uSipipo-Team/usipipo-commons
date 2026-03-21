@@ -1,5 +1,4 @@
 """Tests para constantes."""
-import pytest
 
 from usipipo_commons.constants import (
     FREE_GB,

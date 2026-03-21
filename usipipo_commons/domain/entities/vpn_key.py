@@ -1,8 +1,7 @@
 """VPN Key entity - Ported from monorepo."""
 
-import uuid
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from typing import Optional
 
 from ..enums.key_type import KeyType

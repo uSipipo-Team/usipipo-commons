@@ -1,5 +1,4 @@
 """Tests para validadores."""
-import pytest
 
 from usipipo_commons.utils import (
     validate_telegram_id,
