@@ -5,122 +5,101 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.4] - 2026-03-21
+## [Unreleased]
+
+## [0.5.6] - 2026-03-21
 
 ### Added
-- New entity: `SubscriptionPlan` for subscription management
-- New enum: `PlanType` (ONE_MONTH, THREE_MONTHS, SIX_MONTHS)
+- **Admin Entities**: `AdminUserInfo`, `AdminKeyInfo`, `ServerStatus`, `AdminOperationResult`
+- **Balance Entity**: `Balance` with `add()`, `subtract()`, `has_sufficient()` methods
+- **Data Package Entity**: `DataPackage` with `PackageType` enum (BASIC, ESTANDAR, AVANZADO, PREMIUM, UNLIMITED)
+- **Subscription Transaction Entity**: `SubscriptionTransaction` with status tracking
+- **Ticket System Entities**: `Ticket`, `TicketMessage` with full support workflow
+- **VPN Key Enhancements**: 
+  - `KeyType` enum (OUTLINE, WIREGUARD)
+  - Usage tracking methods: `used_mb()`, `used_gb()`, `remaining_bytes()`
+  - Billing management: `needs_reset()`, `reset_billing_cycle()`, `add_usage()`
+  - Serialization: `to_dict()` method
+- **New Enums**:
+  - `SubscriptionTransactionStatus` (PENDING, ACTIVE, COMPLETED, FAILED, REFUNDED)
+  - `BillingStatus` (PENDING, PROCESSING, COMPLETED, FAILED)
+  - `InvoiceStatus` (DRAFT, ISSUED, PAID, OVERDUE, CANCELLED)
+  - `ConsumptionPaymentMethod` (STRIPE, CRYPTO, MANUAL)
 
 ### Changed
-- N/A
-
-### Deprecated
-- N/A
-
-### Removed
-- N/A
+- **VpnKey Entity**: Complete refactor with monorepo-aligned structure
+  - Changed `user_id` from UUID to `int` (telegram_id)
+  - Changed `vpn_type` to `key_type` for clarity
+  - Fixed dataclass field ordering for Python 3.13 compatibility
 
 ### Fixed
-- N/A
-
-### Security
-- N/A
-
----
-
-## [0.5.3] - 2026-03-21
-
-### Added
-- New entity: `CryptoOrder` for crypto payment orders
-- New enum: `CryptoOrderStatus` (PENDING, COMPLETED, FAILED, EXPIRED)
-
-### Changed
-- N/A
-
-### Deprecated
-- N/A
-
-### Removed
-- N/A
-
-### Fixed
-- N/A
-
-### Security
-- N/A
-
----
-
-## [0.5.1] - 2026-03-21
-
-### Added
-- New consumption billing entities: `ConsumptionBilling`, `ConsumptionInvoice`
-- New enums: `BillingStatus`, `InvoiceStatus`, `ConsumptionPaymentMethod`
-
-### Changed
-- N/A
-
-### Deprecated
-- N/A
-
-### Removed
-- N/A
-
-### Fixed
-- N/A
-
-### Security
-- N/A
+- All entity tests updated and passing (33 tests)
+- Dataclass field ordering issues in Python 3.13
 
 ---
 
 ## [0.5.5] - 2026-03-21
 
 ### Added
-- SubscriptionPlan entity and PlanType enum (from local commit)
-
-### Changed
-- N/A
-
-### Deprecated
-- N/A
-
-### Removed
-- N/A
-
-### Fixed
-- N/A
-
-### Security
-- N/A
+- **SubscriptionPlan Entity**: Complete subscription plan management
+- **PlanType Enum**: ONE_MONTH, THREE_MONTHS, SIX_MONTHS
 
 ---
 
-## [Unreleased]
+## [0.5.4] - 2026-03-21
 
 ### Added
-- Initial project structure
-- Domain entities: `User`, `VpnKey`, `Payment`
-- Domain enums: `VpnType`, `KeyStatus`, `PaymentStatus`, `PaymentMethod`
-- Pydantic schemas for request/response validation
-- Shared constants for plans, bonuses, and error codes
-- Utility functions for validation and formatting
-- Comprehensive test suite (33 tests)
+- **CryptoOrder Entity**: Crypto payment order management with state machine
+- **CryptoOrderStatus Enum**: PENDING, COMPLETED, FAILED, EXPIRED
 
 ### Changed
-- N/A
+- Fixed `CryptoOrder` dataclass field ordering (user_id moved to end with default)
 
-### Deprecated
-- N/A
+---
 
-### Removed
-- N/A
+## [0.5.3] - 2026-03-21
 
-### Fixed
-- N/A
+### Added
+- **Consumption Billing Entities**: 
+  - `ConsumptionBilling` with billing cycle tracking
+  - `ConsumptionInvoice` with invoice generation
+- **New Enums**:
+  - `BillingStatus`
+  - `InvoiceStatus`
+  - `ConsumptionPaymentMethod`
 
-### Security
-- N/A
+---
+
+## [0.5.2] - 2026-03-20
+
+### Added
+- **Crypto Transaction Support**:
+  - `CryptoTransaction` entity with blockchain confirmation tracking
+  - `WebhookToken` entity for secure webhook validation
+  - `CryptoTransactionStatus` enum (PENDING, CONFIRMING, COMPLETED, FAILED)
+
+### Changed
+- Added `CRYPTO_CONFIRMATIONS_REQUIRED = 15` constant
+- Added `WEBHOOK_TOKEN_EXPIRY_MINUTES = 30` constant
+
+---
+
+## [0.5.1] - 2026-03-20
+
+### Added
+- **Core Domain Entities**:
+  - `User` - User account management
+  - `VpnKey` - VPN key representation
+  - `Payment` - Payment transaction tracking
+- **Core Enums**:
+  - `VpnType` - VPN protocol types
+  - `KeyStatus` - Key lifecycle status
+  - `PaymentStatus` - Payment state machine
+  - `PaymentMethod` - Supported payment methods
+- **Pydantic Schemas**: Request/response validation models
+- **Constants**: Plans, bonuses, error codes
+- **Utilities**: Validators and formatters
+- **Test Suite**: 33 comprehensive tests
 
 ---
 
@@ -128,145 +107,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - **VpnKey Entity**: Added `to_dict()` method for serialization
-- **Tests**: Updated VpnKey tests to use new entity structure:
-  - Changed `vpn_type` to `key_type`
-  - Changed `user_id` from UUID to int (telegram_id)
-  - Updated test fixtures to match monorepo entity structure
-- All 33 tests passing ✅
+- **Tests**: Updated VpnKey tests to match monorepo entity structure
 
 ---
 
 ## [0.4.0] - 2026-03-20
 
 ### Added
-- **Complete Entity Library** 🎉 - All entities ported from monorepo:
-  - **Admin Entities**: `AdminUserInfo`, `AdminKeyInfo`, `ServerStatus`, `AdminOperationResult`
-  - **Balance Entity**: `Balance` with add/subtract/has_sufficient methods
-  - **Consumption Billing Entities**: `ConsumptionBilling`, `BillingStatus`, `ConsumptionInvoice`, `InvoiceStatus`, `PaymentMethod`
-  - **Data Package Entities**: `DataPackage`, `PackageType` enum
-  - **Subscription Entities**: `SubscriptionPlan`, `PlanType` enum, `SubscriptionTransaction`, `SubscriptionTransactionStatus` enum
-  - **Ticket/Support Entities**: `Ticket`, `TicketCategory`, `TicketPriority`, `TicketStatus`, `TicketMessage`
-- **New Enums**:
-  - `KeyType` (OUTLINE, WIREGUARD)
-  - `PackageType` (BASIC, ESTANDAR, AVANZADO, PREMIUM, UNLIMITED)
-  - `PlanType` (ONE_MONTH, THREE_MONTHS, SIX_MONTHS)
-  - `TicketCategory`, `TicketPriority`, `TicketStatus`
-  - `SubscriptionTransactionStatus`
-  - `BillingStatus`, `InvoiceStatus`, `PaymentMethod`
-
-### Changed
-- **VpnKey Entity**: Fully ported from monorepo with all methods:
-  - `used_mb`, `used_gb`, `data_limit_gb` properties
-  - `remaining_bytes`, `is_over_limit` properties
-  - `needs_reset()`, `reset_billing_cycle()`, `add_usage()` methods
-  - `__post_init__` for datetime normalization
-- Fixed field ordering in dataclasses for Python 3.13 compatibility
-
-### Project Structure
-```
-usipipo_commons/
-├── domain/
-│   ├── entities/      # 14 entities + 3 value objects
-│   │   ├── Core: User, VpnKey, Payment, Balance
-│   │   ├── Crypto: CryptoOrder, CryptoTransaction, WebhookToken
-│   │   ├── Admin: AdminUserInfo, AdminKeyInfo, ServerStatus, AdminOperationResult
-│   │   ├── Consumption: ConsumptionBilling, ConsumptionInvoice
-│   │   ├── Data Package: DataPackage
-│   │   ├── Subscription: SubscriptionPlan, SubscriptionTransaction
-│   │   └── Support: Ticket, TicketMessage
-│   └── enums/         # 14 enums
-│       ├── VpnType, KeyType, KeyStatus
-│       ├── PaymentStatus, PaymentMethod
-│       ├── CryptoOrderStatus, CryptoTransactionStatus
-│       ├── PackageType, PlanType
-│       ├── TicketCategory, TicketPriority, TicketStatus
-│       ├── BillingStatus, InvoiceStatus
-│       └── SubscriptionTransactionStatus
-├── schemas/           # Pydantic request/response models
-├── constants/         # Plans, bonuses, error codes, crypto constants
-└── utils/             # Validators, formatters
-```
+- Complete entity library port from monorepo (14 entities, 14 enums)
 
 ---
 
 ## [0.3.0] - 2026-03-20
 
 ### Added
-- **Crypto Payment Entities** 🎉
-  - `CryptoOrder` entity with order management methods
-  - `CryptoTransaction` entity with confirmation tracking
-  - `WebhookToken` entity for webhook validation
-- **New Enums**
-  - `CryptoOrderStatus` (PENDING, COMPLETED, FAILED, EXPIRED)
-  - `CryptoTransactionStatus` (PENDING, CONFIRMING, COMPLETED, FAILED)
-- **Entity Methods**
-  - `CryptoOrder.create()` factory method
-  - `CryptoOrder.mark_completed()`, `mark_failed()`, `mark_expired()`
-  - `CryptoTransaction.add_confirmation()` with completion check
-  - `WebhookToken.is_valid()` for token expiration check
-- **Constants**
-  - `CRYPTO_CONFIRMATIONS_REQUIRED = 15` for blockchain confirmations
-  - `WEBHOOK_TOKEN_EXPIRY_MINUTES = 30` for webhook security
-
-### Changed
-- Fixed `CryptoOrder` dataclass field ordering (user_id moved to end with default)
-
-### Project Structure
-```
-usipipo_commons/
-├── domain/
-│   ├── entities/      # User, VpnKey, Payment, CryptoOrder, CryptoTransaction, WebhookToken
-│   └── enums/         # VpnType, KeyStatus, PaymentStatus, PaymentMethod, CryptoOrderStatus, CryptoTransactionStatus
-├── schemas/           # Pydantic request/response models
-├── constants/         # Plans, bonuses, error codes, crypto constants
-└── utils/             # Validators, formatters
-```
+- Crypto payment entities and enums
 
 ---
 
 ## [0.2.0] - 2026-03-19
 
 ### Added
-- **Crypto Payment Support**
-  - `CryptoOrder` entity for tracking crypto orders
-  - `CryptoTransaction` entity for blockchain transactions
-  - `WebhookToken` entity for webhook validation
-  - `CryptoOrderStatus` enum
-  - `CryptoTransactionStatus` enum
+- Initial crypto payment support
 
 ---
 
 ## [0.1.0] - 2026-03-18
 
 ### Added
-- **Initial Release** 🎉
-- Core domain entities for the uSipipo ecosystem
-- Pydantic v2 schemas for API validation
-- Shared constants and error codes
-- Utility validators and formatters
-- Test coverage for all modules
-- Python 3.13+ support
-- Published to GitHub Packages
-
-### Project Structure
-```
-usipipo_commons/
-├── domain/
-│   ├── entities/      # User, VpnKey, Payment
-│   └── enums/         # VpnType, KeyStatus, PaymentStatus, PaymentMethod
-├── schemas/           # Pydantic request/response models
-├── constants/         # Plans, bonuses, error codes
-└── utils/             # Validators, formatters
-```
-
-### Dependencies
-- `pydantic>=2.12.0`
-
-### Dev Dependencies
-- `pytest>=8.0.0`
-- `pytest-cov>=4.0.0`
-- `mypy>=1.0.0`
-- `ruff>=0.1.0`
+- Initial release with core domain entities, schemas, and utilities
 
 ---
 
