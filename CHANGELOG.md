@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-03-21
+
+### Added
+- **Admin Panel Entities Export**: Exported `AdminUserInfo`, `AdminKeyInfo`, `ServerStatus`, `AdminOperationResult` from `usipipo_commons.domain.entities`
+  - `AdminUserInfo` entity for administrative user information (user_id, username, keys count, referral_credits, etc.)
+  - `AdminKeyInfo` entity for VPN key administration (key details, usage, status)
+  - `ServerStatus` entity for VPN server health monitoring
+  - `AdminOperationResult` entity for standardized admin operation responses
+
 ## [0.6.0] - 2026-03-21
 
 ### Added
