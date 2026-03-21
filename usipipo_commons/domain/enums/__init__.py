@@ -8,6 +8,7 @@ from .payment_method import PaymentMethod
 from .payment_status import PaymentStatus
 from .plan_type import PlanType
 from .vpn_type import VpnType
+from .wallet_status import WalletStatus
 
 __all__ = [
     "KeyType",
@@ -20,4 +21,5 @@ __all__ = [
     "ConsumptionPaymentMethod",
     "CryptoOrderStatus",
     "PlanType",
+    "WalletStatus",
 ]

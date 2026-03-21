@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2026-03-21
+
+### Added
+- **Wallet Management Entities**: 
+  - `Wallet` entity for BSC wallet management (address, balance, transaction tracking)
+  - `WalletPool` entity for reusable wallet pool (expired order wallet recycling)
+  - `WalletStatus` enum: ACTIVE, INACTIVE, AVAILABLE, IN_USE
+- **Wallet Repository Interfaces**:
+  - `IWalletRepository` with CRUD operations and reusable wallet methods
+  - `IWalletPoolRepository` with pool management and cleanup methods
+- **Wallet Methods**:
+  - `Wallet.create()`: Factory method for new wallets
+  - `Wallet.update_balance()`: Balance and transaction tracking
+  - `Wallet.deactivate()` / `Wallet.activate()`: Status management
+  - `WalletPool.create()`: Factory method for pool entries
+  - `WalletPool.mark_reused()`: Mark wallet as reused by user
+  - `WalletPool.is_available()`: Check availability for reuse
+  - `WalletPool.is_expired()`: Check expiration status
+
 ## [0.8.0] - 2026-03-21
 
 ### Added

@@ -8,6 +8,8 @@ from usipipo_commons.domain.entities import (
     ConsumptionInvoice,
     CryptoOrder,
     SubscriptionPlan,
+    Wallet,
+    WalletPool,
 )
 from usipipo_commons.domain.enums import (
     VpnType,
@@ -19,6 +21,11 @@ from usipipo_commons.domain.enums import (
     ConsumptionPaymentMethod,
     CryptoOrderStatus,
     PlanType,
+    WalletStatus,
+)
+from usipipo_commons.domain.interfaces import (
+    IWalletRepository,
+    IWalletPoolRepository,
 )
 from usipipo_commons.schemas import (
     UserResponse,
@@ -51,7 +58,7 @@ from usipipo_commons.utils import (
     format_duration,
 )
 
-__version__ = "0.5.3"
+__version__ = "0.9.0"
 __all__ = [
     # Entities
     "User",
@@ -61,6 +68,8 @@ __all__ = [
     "ConsumptionInvoice",
     "CryptoOrder",
     "SubscriptionPlan",
+    "Wallet",
+    "WalletPool",
     # Enums
     "VpnType",
     "KeyStatus",
@@ -71,6 +80,10 @@ __all__ = [
     "ConsumptionPaymentMethod",
     "CryptoOrderStatus",
     "PlanType",
+    "WalletStatus",
+    # Interfaces
+    "IWalletRepository",
+    "IWalletPoolRepository",
     # Schemas
     "UserResponse",
     "UserCreateRequest",

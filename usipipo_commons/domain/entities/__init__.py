@@ -13,6 +13,7 @@ from .ticket import Ticket, TicketCategory, TicketPriority, TicketStatus
 from .ticket_message import TicketMessage
 from .user import User
 from .vpn_key import VpnKey
+from .wallet import Wallet, WalletPool
 
 __all__ = [
     "User",
@@ -34,4 +35,6 @@ __all__ = [
     "ServerStatus",
     "AdminOperationResult",
     "Referral",
+    "Wallet",
+    "WalletPool",
 ]
