@@ -21,7 +21,7 @@ class SubscriptionTransaction:
     """Represents a subscription transaction for tracking and idempotency."""
 
     transaction_id: str
-    user_id: int
+    user_id: uuid.UUID  # ← Changed from int to UUID
     plan_type: str
     amount_stars: int
     payload: str
