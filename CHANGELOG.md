@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+---
+
+## [0.10.0] - 2026-03-22
+
+### Changed
+
+#### VpnKey Entity
+- **user_id**: Changed from `int` to `UUID` for consistency with backend database schema
+- This change aligns the entity with the backend's `vpn_keys.user_id` column which uses UUID type
+- Backward compatible with existing code that doesn't directly access user_id
+
+### Migration Notes
+
+If you're using `VpnKey.user_id` directly:
+
+**Before (v0.9.0):**
+```python
+from usipipo_commons.domain.entities import VpnKey
+
+key = VpnKey(user_id=123456)  # int
+```
+
+**After (v0.10.0):**
+```python
+from uuid import UUID
+from usipipo_commons.domain.entities import VpnKey
+
+key = VpnKey(user_id=UUID("369a4d7f-e8ef-4d81-84f1-483363f81d00"))  # UUID
+```
+
+---
+
 ## [0.9.0] - 2026-03-21
 
 ### Added
@@ -186,8 +218,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## Version History
+
+| Version | Date | Description |
+|---------|------|-------------|
+| 0.10.0 | 2026-03-22 | VpnKey entity: user_id int → UUID |
+| 0.9.0 | 2026-03-21 | Wallet Management Entities |
+| 0.8.0 | 2026-03-21 | Referral System + User Bonus Fields |
+| 0.7.0 | 2026-03-21 | Admin Panel Entities |
+| 0.6.0 | 2026-03-21 | Ticket System Entities |
+| 0.5.6 | 2026-03-20 | Complete Entity Library |
+| 0.5.5 | 2026-03-20 | Subscription Entities |
+| 0.5.3 | 2026-03-20 | Crypto Payment Entities |
+| 0.5.2 | 2026-03-20 | Consumption Billing Entities |
+| 0.4.0 | 2026-03-20 | Initial entity library port |
+
+---
+
 ## Links
 
 - [GitHub Repository](https://github.com/uSipipo-Team/usipipo-commons)
 - [PyPI Package](https://pypi.org/project/usipipo-commons/)
 - [Issue Tracker](https://github.com/uSipipo-Team/usipipo-commons/issues)
+- [Latest Release v0.10.0](https://github.com/uSipipo-Team/usipipo-commons/releases/tag/v0.10.0)
+
+---
+
+[Unreleased]: https://github.com/uSipipo-Team/usipipo-commons/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/uSipipo-Team/usipipo-commons/releases/tag/v0.10.0
+[0.9.0]: https://github.com/uSipipo-Team/usipipo-commons/compare/v0.8.0...v0.9.0
