@@ -6,7 +6,7 @@ from usipipo_commons.schemas import (
     CreateVpnKeyRequest,
     CreatePaymentRequest,
 )
-from usipipo_commons.domain.enums import VpnType, PaymentMethod
+from usipipo_commons.domain.enums import KeyType, PaymentMethod
 
 
 class TestUserCreateRequest:
@@ -39,19 +39,19 @@ class TestCreateVpnKeyRequest:
         """Test con solicitud válida."""
         request = CreateVpnKeyRequest(
             name="My VPN",
-            vpn_type=VpnType.WIREGUARD,
+            key_type=KeyType.WIREGUARD,
             data_limit_gb=10.0,
         )
 
         assert request.name == "My VPN"
-        assert request.vpn_type == VpnType.WIREGUARD
+        assert request.key_type == KeyType.WIREGUARD
         assert request.data_limit_gb == 10.0
 
     def test_default_data_limit(self):
         """Test con límite de datos por defecto."""
         request = CreateVpnKeyRequest(
             name="My VPN",
-            vpn_type=VpnType.OUTLINE,
+            key_type=KeyType.OUTLINE,
         )
 
         assert request.data_limit_gb == 5.0

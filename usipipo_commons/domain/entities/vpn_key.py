@@ -3,8 +3,9 @@
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Optional
-from uuid import UUID
+from uuid import UUID, uuid4
 
+from ..enums.key_status import KeyStatus
 from ..enums.key_type import KeyType
 
 
@@ -17,9 +18,10 @@ class VpnKey:
     Portada fielmente desde el monorepo.
     """
 
-    id: Optional[str] = None  # ID interno en nuestra base de datos (UUID string)
-    user_id: Optional[UUID] = None  # UUID del dueño (ahora usamos UUID en vez de telegram_id)
+    id: UUID = field(default_factory=uuid4)  # ← Changed from Optional[str] to UUID
+    user_id: UUID = field(default_factory=uuid4)  # UUID del dueño
     key_type: KeyType = KeyType.OUTLINE
+    status: KeyStatus = KeyStatus.ACTIVE  # ← Added status field
     name: str = "Nueva Clave"
 
     # Datos técnicos
@@ -28,7 +30,8 @@ class VpnKey:
 
     # Estado y fechas
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
-    is_active: bool = True
+    
+    # ← is_active is now a property based on status
 
     # Métricas de uso (sincronizadas desde los servidores VPN)
     used_bytes: int = 0  # Tráfico consumido en bytes
@@ -93,6 +96,11 @@ class VpnKey:
             self.expires_at = self.expires_at.astimezone(timezone.utc)
 
     @property
+    def is_active(self) -> bool:
+        """Backward compatibility property - returns True if status is ACTIVE."""
+        return self.status == KeyStatus.ACTIVE
+
+    @property
     def used_mb(self) -> float:
         """Calcula el uso en MB."""
         return self.used_bytes / (1024 ** 2)
@@ -147,10 +155,11 @@ class VpnKey:
     def to_dict(self) -> dict:
         """Convierte la entidad a diccionario."""
         return {
-            "id": self.id,
-            "user_id": self.user_id,
+            "id": str(self.id),
+            "user_id": str(self.user_id),
             "name": self.name,
             "key_type": self.key_type.value,
+            "status": self.status.value,
             "key_data": self.key_data,
             "external_id": self.external_id,
             "is_active": self.is_active,

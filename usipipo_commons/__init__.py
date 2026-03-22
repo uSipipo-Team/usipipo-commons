@@ -12,7 +12,7 @@ from usipipo_commons.domain.entities import (
     WalletPool,
 )
 from usipipo_commons.domain.enums import (
-    VpnType,
+    KeyType,
     KeyStatus,
     PaymentStatus,
     PaymentMethod,
@@ -71,7 +71,7 @@ __all__ = [
     "Wallet",
     "WalletPool",
     # Enums
-    "VpnType",
+    "KeyType",
     "KeyStatus",
     "PaymentStatus",
     "PaymentMethod",
