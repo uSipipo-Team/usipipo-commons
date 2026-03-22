@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
-from ..domain.enums.vpn_type import VpnType
+from ..domain.enums.key_type import KeyType  # ← Changed from VpnType
 from ..domain.enums.key_status import KeyStatus
 
 
@@ -12,7 +12,7 @@ class VpnKeyResponse(BaseModel):
     id: UUID
     user_id: UUID
     name: str
-    vpn_type: VpnType
+    key_type: KeyType  # ← Changed from vpn_type: VpnType
     status: KeyStatus
     config: Optional[str] = None
     created_at: datetime
@@ -28,7 +28,7 @@ class VpnKeyResponse(BaseModel):
 class CreateVpnKeyRequest(BaseModel):
     """Solicitud para crear clave VPN."""
     name: str = Field(..., min_length=1, max_length=50)
-    vpn_type: VpnType
+    key_type: KeyType  # ← Changed from vpn_type: VpnType
     data_limit_gb: float = Field(default=5.0, ge=0.1, le=100.0)
 
 

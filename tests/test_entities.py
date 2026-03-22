@@ -4,7 +4,7 @@ from decimal import Decimal
 from uuid import uuid4
 
 from usipipo_commons.domain.entities import User, VpnKey, Payment, ConsumptionBilling, ConsumptionInvoice, CryptoOrder
-from usipipo_commons.domain.enums import KeyType, PaymentStatus, PaymentMethod, BillingStatus, InvoiceStatus, ConsumptionPaymentMethod, CryptoOrderStatus
+from usipipo_commons.domain.enums import KeyType, KeyStatus, PaymentStatus, PaymentMethod, BillingStatus, InvoiceStatus, ConsumptionPaymentMethod, CryptoOrderStatus
 
 
 class TestUser:
@@ -64,32 +64,33 @@ class TestVpnKey:
     def test_vpn_key_creation(self):
         """Test para crear una clave VPN válida."""
         vpn_key = VpnKey(
-            id=str(uuid4()),
-            user_id=123456789,
+            id=uuid4(),  # ← Now UUID
+            user_id=uuid4(),  # ← Now UUID
             name="My VPN",
             key_type=KeyType.WIREGUARD,
+            status=KeyStatus.ACTIVE,  # ← Added status field
             key_data="wireguard-config-placeholder",
             external_id="wg-external-id-123",
-            is_active=True,
             created_at=datetime.now(timezone.utc),
             data_limit_bytes=5 * 1024**3,
         )
 
         assert vpn_key.name == "My VPN"
         assert vpn_key.key_type == KeyType.WIREGUARD
-        assert vpn_key.is_active is True
+        assert vpn_key.status == KeyStatus.ACTIVE
+        assert vpn_key.is_active is True  # property based on status
         assert vpn_key.data_limit_gb == 5.0
 
     def test_vpn_key_to_dict(self):
         """Test para convertir clave VPN a diccionario."""
         vpn_key = VpnKey(
-            id=str(uuid4()),
-            user_id=123456789,
+            id=uuid4(),  # ← Now UUID, not str
+            user_id=uuid4(),  # ← Now UUID, not int
             name="My VPN",
             key_type=KeyType.OUTLINE,
+            status=KeyStatus.ACTIVE,  # ← Added status field
             key_data="ss://outline-config-placeholder",
             external_id="outline-external-id-456",
-            is_active=True,
             created_at=datetime.now(timezone.utc),
             data_limit_bytes=10 * 1024**3,
         )
@@ -98,7 +99,8 @@ class TestVpnKey:
 
         assert vpn_dict["name"] == "My VPN"
         assert vpn_dict["key_type"] == "outline"
-        assert vpn_dict["is_active"] is True
+        assert vpn_dict["status"] == "active"
+        assert vpn_dict["is_active"] is True  # property
 
 
 class TestPayment:
