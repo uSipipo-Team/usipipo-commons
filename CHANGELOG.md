@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.11.0] - 2026-03-22
+
+### Changed
+
+#### SubscriptionPlan Entity
+- **user_id**: Changed from `int` to `UUID` for multi-client support
+- **Changed to `@dataclass`**: Migrated from Pydantic `BaseModel` to `@dataclass` for consistency with other entities
+- **Added fields**: `id`, `created_at`, `updated_at` for full entity tracking
+- **New properties**: `days_remaining`, `is_expiring_soon` for subscription management
+
+#### SubscriptionTransaction Entity
+- **user_id**: Changed from `int` to `UUID` for multi-client support
+
+#### Wallet Entities
+- **Fixed datetime usage**: Changed `datetime.utcnow()` to `datetime.now(timezone.utc)` (Python 3.12+ compatible)
+- **WalletPool**: Added missing `updated_at` field
+
+### Breaking Changes
+
+**`SubscriptionPlan.user_id` and `SubscriptionTransaction.user_id` are now `UUID` instead of `int`**
+
+This is a breaking change for code that directly accesses these fields:
+
+**Before (v0.10.0):**
+```python
+from usipipo_commons.domain.entities import SubscriptionPlan
+
+plan = SubscriptionPlan(user_id=123456)  # int (Telegram ID)
+```
+
+**After (v0.11.0):**
+```python
+from uuid import UUID
+from usipipo_commons.domain.entities import SubscriptionPlan
+
+plan = SubscriptionPlan(user_id=UUID("369a4d7f-e8ef-4d81-84f1-483363f81d00"))  # UUID
+```
+
+### Migration Notes
+
+This change enables multi-client support (Android, Desktop, Web) without requiring Telegram.
+The backend will need to:
+1. Update database schema with Alembic migration
+2. Update service signatures to use `UUID` instead of `int`
+3. Update routers to use `current_user.id` instead of `current_user.telegram_id`
+
+---
+
 ## [0.10.0] - 2026-03-22
 
 ### Changed
@@ -222,6 +270,7 @@ key = VpnKey(user_id=UUID("369a4d7f-e8ef-4d81-84f1-483363f81d00"))  # UUID
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.11.0 | 2026-03-22 | Multi-client support: user_id int → UUID in subscriptions |
 | 0.10.0 | 2026-03-22 | VpnKey entity: user_id int → UUID |
 | 0.9.0 | 2026-03-21 | Wallet Management Entities |
 | 0.8.0 | 2026-03-21 | Referral System + User Bonus Fields |
@@ -240,10 +289,11 @@ key = VpnKey(user_id=UUID("369a4d7f-e8ef-4d81-84f1-483363f81d00"))  # UUID
 - [GitHub Repository](https://github.com/uSipipo-Team/usipipo-commons)
 - [PyPI Package](https://pypi.org/project/usipipo-commons/)
 - [Issue Tracker](https://github.com/uSipipo-Team/usipipo-commons/issues)
-- [Latest Release v0.10.0](https://github.com/uSipipo-Team/usipipo-commons/releases/tag/v0.10.0)
+- [Latest Release v0.11.0](https://github.com/uSipipo-Team/usipipo-commons/releases/tag/v0.11.0)
 
 ---
 
-[Unreleased]: https://github.com/uSipipo-Team/usipipo-commons/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/uSipipo-Team/usipipo-commons/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/uSipipo-Team/usipipo-commons/releases/tag/v0.11.0
 [0.10.0]: https://github.com/uSipipo-Team/usipipo-commons/releases/tag/v0.10.0
 [0.9.0]: https://github.com/uSipipo-Team/usipipo-commons/compare/v0.8.0...v0.9.0
