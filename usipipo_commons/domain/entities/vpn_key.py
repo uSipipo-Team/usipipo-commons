@@ -3,6 +3,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Optional
+from uuid import UUID
 
 from ..enums.key_type import KeyType
 
@@ -17,7 +18,7 @@ class VpnKey:
     """
 
     id: Optional[str] = None  # ID interno en nuestra base de datos (UUID string)
-    user_id: Optional[int] = None  # El telegram_id del dueño de la llave
+    user_id: Optional[UUID] = None  # UUID del dueño (ahora usamos UUID en vez de telegram_id)
     key_type: KeyType = KeyType.OUTLINE
     name: str = "Nueva Clave"
 

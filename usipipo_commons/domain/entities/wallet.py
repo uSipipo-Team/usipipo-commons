@@ -88,7 +88,7 @@ class Wallet:
 class WalletPool:
     """
     Entidad de pool de wallets reutilizables.
-    
+
     Gestiona un pool de wallets expiradas que pueden ser
     reasignadas a nuevos usuarios para evitar crear wallets innecesarias.
     """
