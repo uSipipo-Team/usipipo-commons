@@ -1,5 +1,7 @@
+"""Wallet and WalletPool domain entities."""
+
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from uuid import UUID, uuid4
 
@@ -10,7 +12,7 @@ from ..enums.wallet_status import WalletStatus
 class Wallet:
     """
     Entidad de wallet BSC para gestión de pagos crypto.
-    
+
     Representa una wallet BSC asignada a un usuario para recibir
     pagos mediante TronDealer API.
     """
@@ -34,7 +36,7 @@ class Wallet:
         label: Optional[str] = None,
     ) -> "Wallet":
         """Crea una nueva wallet para un usuario."""
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)  # ← Fixed: was datetime.utcnow()
         return cls(
             id=uuid4(),
             user_id=user_id,
@@ -54,18 +56,18 @@ class Wallet:
         self.balance_usdt += amount_usdt
         self.total_received_usdt += amount_usdt
         self.transaction_count += 1
-        self.updated_at = datetime.utcnow()
-        self.last_used_at = datetime.utcnow()
+        self.updated_at = datetime.now(timezone.utc)  # ← Fixed
+        self.last_used_at = datetime.now(timezone.utc)  # ← Fixed
 
     def deactivate(self) -> None:
         """Desactiva la wallet."""
         self.status = WalletStatus.INACTIVE
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now(timezone.utc)  # ← Fixed
 
     def activate(self) -> None:
         """Activa la wallet."""
         self.status = WalletStatus.ACTIVE
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now(timezone.utc)  # ← Fixed
 
     def to_dict(self) -> dict:
         """Convierte a diccionario para serialización."""
@@ -101,6 +103,7 @@ class WalletPool:
     expires_at: datetime
     reused_by_user_id: Optional[UUID] = None
     reused_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None  # ← Added: field was missing
 
     @classmethod
     def create(
@@ -110,7 +113,7 @@ class WalletPool:
         expires_at: datetime,
     ) -> "WalletPool":
         """Crea una nueva entrada de pool para una wallet expirada."""
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)  # ← Fixed: was datetime.utcnow()
         return cls(
             id=uuid4(),
             wallet_address=wallet_address,
@@ -127,18 +130,18 @@ class WalletPool:
         """Marca la wallet como reutilizada por un usuario."""
         self.status = WalletStatus.IN_USE
         self.reused_by_user_id = user_id
-        self.reused_at = datetime.utcnow()
+        self.reused_at = datetime.now(timezone.utc)  # ← Fixed
 
     def mark_available(self) -> None:
         """Marca la wallet como disponible en el pool."""
         self.status = WalletStatus.AVAILABLE
         self.reused_by_user_id = None
         self.reused_at = None
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now(timezone.utc)  # ← Fixed: now field exists
 
     def is_expired(self) -> bool:
         """Verifica si la wallet está expirada."""
-        return datetime.utcnow() > self.expires_at
+        return datetime.now(timezone.utc) > self.expires_at  # ← Fixed
 
     def is_available(self) -> bool:
         """Verifica si la wallet está disponible para reuso."""
