@@ -7,6 +7,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.12.0] - 2026-03-22
+
+### Changed
+
+#### VpnKey Entity
+- **id**: `Optional[str]` → `UUID` (always has value via `default_factory=uuid4`)
+- **user_id**: `Optional[UUID]` → `UUID` (always has value)
+- **Added status**: `KeyStatus` field (ACTIVE, EXPIRED, REVOKED, PENDING)
+- **is_active**: Now a property based on status (backward compatible)
+
+#### VpnKeyResponse Schema
+- **vpn_type**: `VpnType` → **key_type**: `KeyType`
+- **CreateVpnKeyRequest**: vpn_type → key_type
+
+#### Enums
+- **Deleted**: `enums/vpn_type.py` (duplicate of KeyType)
+- **KeyType** is now the single source of truth
+
+### Breaking Changes
+
+**VpnKey entity refactored:**
+- `id` is now always a UUID (not Optional[str])
+- `status: KeyStatus` field added for full lifecycle management
+- `is_active` is now a read-only property
+
+**Schema naming:**
+- `vpn_type` → `key_type` in all request/response schemas
+
+### Migration Notes
+
+Update code using VpnKey:
+
+**Before (v0.11.0):**
+```python
+from usipipo_commons.domain.entities import VpnKey
+from usipipo_commons.domain.enums import VpnType
+
+key = VpnKey(
+    id="some-string",
+    user_id=some_uuid,
+    vpn_type=VpnType.WIREGUARD,
+)
+```
+
+**After (v0.12.0):**
+```python
+from usipipo_commons.domain.entities import VpnKey
+from usipipo_commons.domain.enums import KeyType, KeyStatus
+
+key = VpnKey(
+    user_id=some_uuid,
+    key_type=KeyType.WIREGUARD,
+    status=KeyStatus.ACTIVE,
+)
+
+# Access is_active as property
+if key.is_active:  # Returns key.status == KeyStatus.ACTIVE
+    ...
+```
+
+---
+
 ## [0.11.0] - 2026-03-22
 
 ### Changed
