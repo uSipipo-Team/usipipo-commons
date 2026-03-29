@@ -7,7 +7,7 @@ from .crypto_order import CryptoOrder
 from .data_package import DataPackage, PackageType
 from .payment import Payment
 from .referral import Referral
-from .server_status import ServerStatus
+from .server import Server
 from .subscription_plan import SubscriptionPlan
 from .ticket import Ticket, TicketCategory, TicketPriority, TicketStatus
 from .ticket_message import TicketMessage
@@ -32,9 +32,9 @@ __all__ = [
     "TicketStatus",
     "AdminUserInfo",
     "AdminKeyInfo",
-    "ServerStatus",
     "AdminOperationResult",
     "Referral",
     "Wallet",
     "WalletPool",
+    "Server",
 ]
