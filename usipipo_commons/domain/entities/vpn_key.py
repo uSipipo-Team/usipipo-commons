@@ -20,6 +20,7 @@ class VpnKey:
 
     id: UUID = field(default_factory=uuid4)  # ← Changed from Optional[str] to UUID
     user_id: UUID = field(default_factory=uuid4)  # UUID del dueño
+    server_id: Optional[UUID] = None  # ← UUID del servidor (opcional, para compatibilidad)
     key_type: KeyType = KeyType.OUTLINE
     status: KeyStatus = KeyStatus.ACTIVE  # ← Added status field
     name: str = "Nueva Clave"
@@ -157,6 +158,7 @@ class VpnKey:
         return {
             "id": str(self.id),
             "user_id": str(self.user_id),
+            "server_id": str(self.server_id) if self.server_id else None,
             "name": self.name,
             "key_type": self.key_type.value,
             "status": self.status.value,
