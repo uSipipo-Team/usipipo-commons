@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.15.0] - 2026-04-01
+
+### Added
+
+#### Type Checking Support
+- **py.typed marker files** - Added to enable proper mypy type checking for dependent projects
+  - `usipipo_commons/py.typed` - Package root marker
+  - `usipipo_commons/domain/py.typed` - Domain package marker
+  - `usipipo_commons/domain/entities/py.typed` - Entities package marker
+
+### Changed
+
+#### Build Configuration
+- Updated `pyproject.toml` to include py.typed files in wheel builds using hatchling's force-include
+- Ensures type information is available when package is installed from PyPI
+
+### Impact
+
+This change fixes CI type checking errors in dependent projects:
+- ✅ usipipo-telegram-bot (fixed 65 mypy errors)
+- ✅ All other uSipipo projects can now use proper type checking
+
+### Technical Details
+- **Files Added:** 3 py.typed marker files
+- **Files Modified:** 1 (pyproject.toml)
+- **Breaking Changes:** None (backward compatible)
+
+## [0.14.0] - 2026-03-31
+
+### Changed
+
+#### VpnKey Entity
+- **server_id**: Added optional field for VPN server selection
+- Enables users to select preferred server during key creation
+
+## [0.13.0] - 2026-03-22
+
+### Added
+
+#### Server Entity
+- New `Server` entity for VPN server management
+- Fields: id, name, country, city, endpoint, max_connections, current_connections, load_percentage, is_active, protocol
+
 ## [0.12.0] - 2026-03-22
 
 ### Changed
