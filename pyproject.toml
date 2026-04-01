@@ -28,6 +28,16 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["usipipo_commons"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"usipipo_commons/py.typed" = "usipipo_commons/py.typed"
+"usipipo_commons/domain/py.typed" = "usipipo_commons/domain/py.typed"
+"usipipo_commons/domain/entities/py.typed" = "usipipo_commons/domain/entities/py.typed"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/usipipo_commons",
+]
+
 [tool.ruff]
 line-length = 100
 target-version = "py313"
