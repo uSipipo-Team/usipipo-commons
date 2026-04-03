@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.18.0] - 2026-04-03
+
+### Added
+
+- **User Entity** - Added `current_billing_id`, `has_pending_debt`, `consumption_mode_enabled` fields
+- **User Methods** - Added `mark_as_has_debt()`, `clear_debt()`, `activate_consumption_mode()`, `deactivate_consumption_mode()`
+- **Payment Entity** - Added `@classmethod create()` factory method and `amount` property
+- **VpnKey Entity** - Added `set_status()` method for mutable status changes
+- **KeyStatus Enum** - Added `INACTIVE = "inactive"` value
+
+### Changed
+
+- **User Entity** - Made `telegram_id` Optional[int] to support email-only users
+- **ConsumptionBilling** - Changed `user_id` from `int` to `UUID`
+- **ConsumptionInvoice** - Changed `user_id` from `int` to `UUID`
+- **Schemas** - Replaced deprecated `class Config: from_attributes = True` with `model_config = ConfigDict(from_attributes=True)` in user.py, vpn.py, payment.py
+- **CryptoOrder** - Fixed `datetime.utcnow()` → `datetime.now(timezone.utc)`
+
+### Technical Details
+
+- **Files Modified:** 9 files
+- **Tests:** 60 tests (100% passing, 0 warnings)
+
+---
+
 ## [0.17.0] - 2026-04-03
 
 ### Changed

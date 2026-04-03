@@ -8,7 +8,7 @@ from uuid import UUID
 class User:
     """Entidad de usuario compartida."""
     id: UUID
-    telegram_id: int
+    telegram_id: Optional[int]
     username: Optional[str]
     first_name: Optional[str]
     last_name: Optional[str]
@@ -24,6 +24,25 @@ class User:
     loyalty_bonus_percent: int = 0
     welcome_bonus_used: bool = False
     referred_users_with_purchase: int = 0
+    current_billing_id: Optional[UUID] = None
+    has_pending_debt: bool = False
+    consumption_mode_enabled: bool = False
+
+    def mark_as_has_debt(self) -> None:
+        """Mark user as having pending debt."""
+        self.has_pending_debt = True
+
+    def clear_debt(self) -> None:
+        """Clear user debt."""
+        self.has_pending_debt = False
+
+    def activate_consumption_mode(self) -> None:
+        """Enable consumption mode."""
+        self.consumption_mode_enabled = True
+
+    def deactivate_consumption_mode(self) -> None:
+        """Disable consumption mode."""
+        self.consumption_mode_enabled = False
 
     def to_dict(self) -> dict:
         """Convierte a diccionario para serialización."""

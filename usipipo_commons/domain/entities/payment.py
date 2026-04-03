@@ -1,7 +1,7 @@
-from dataclasses import dataclass
-from datetime import datetime
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from typing import Optional
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from ..enums.payment_status import PaymentStatus
 from ..enums.payment_method import PaymentMethod
@@ -23,6 +23,40 @@ class Payment:
     expires_at: Optional[datetime]
     paid_at: Optional[datetime]
     transaction_hash: Optional[str]
+
+    @classmethod
+    def create(
+        cls,
+        user_id: UUID,
+        amount_usd: float,
+        gb_purchased: float,
+        method: PaymentMethod,
+        crypto_address: Optional[str] = None,
+        crypto_network: Optional[str] = None,
+        telegram_star_invoice_id: Optional[str] = None,
+        expires_at: Optional[datetime] = None,
+    ) -> "Payment":
+        """Factory method to create a Payment."""
+        return cls(
+            id=uuid4(),
+            user_id=user_id,
+            amount_usd=amount_usd,
+            gb_purchased=gb_purchased,
+            method=method,
+            status=PaymentStatus.PENDING,
+            crypto_address=crypto_address,
+            crypto_network=crypto_network,
+            telegram_star_invoice_id=telegram_star_invoice_id,
+            created_at=datetime.now(timezone.utc),
+            expires_at=expires_at,
+            paid_at=None,
+            transaction_hash=None,
+        )
+
+    @property
+    def amount(self) -> float:
+        """Alias for amount_usd."""
+        return self.amount_usd
 
     def to_dict(self) -> dict:
         """Convierte a diccionario para serialización."""

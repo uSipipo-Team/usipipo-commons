@@ -58,6 +58,88 @@ class TestUser:
         assert isinstance(user_dict["id"], str)
 
 
+class TestUserConsumptionMethods:
+    """Tests para métodos de consumo y deuda de User."""
+
+    def test_mark_as_has_debt(self):
+        """Test para marcar usuario con deuda pendiente."""
+        user = User(
+            id=uuid4(),
+            telegram_id=123456789,
+            username="testuser",
+            first_name="Test",
+            last_name="User",
+            is_admin=False,
+            created_at=datetime.now(),
+            updated_at=datetime.now(),
+            balance_gb=5.0,
+            total_purchased_gb=10.0,
+            referral_code="REF1234",
+            referred_by=None,
+        )
+        user.mark_as_has_debt()
+        assert user.has_pending_debt is True
+
+    def test_clear_debt(self):
+        """Test para limpiar deuda de usuario."""
+        user = User(
+            id=uuid4(),
+            telegram_id=123456789,
+            username="testuser",
+            first_name="Test",
+            last_name="User",
+            is_admin=False,
+            created_at=datetime.now(),
+            updated_at=datetime.now(),
+            balance_gb=5.0,
+            total_purchased_gb=10.0,
+            referral_code="REF1234",
+            referred_by=None,
+        )
+        user.mark_as_has_debt()
+        user.clear_debt()
+        assert user.has_pending_debt is False
+
+    def test_activate_consumption_mode(self):
+        """Test para activar modo consumo."""
+        user = User(
+            id=uuid4(),
+            telegram_id=123456789,
+            username="testuser",
+            first_name="Test",
+            last_name="User",
+            is_admin=False,
+            created_at=datetime.now(),
+            updated_at=datetime.now(),
+            balance_gb=5.0,
+            total_purchased_gb=10.0,
+            referral_code="REF1234",
+            referred_by=None,
+        )
+        user.activate_consumption_mode()
+        assert user.consumption_mode_enabled is True
+
+    def test_deactivate_consumption_mode(self):
+        """Test para desactivar modo consumo."""
+        user = User(
+            id=uuid4(),
+            telegram_id=123456789,
+            username="testuser",
+            first_name="Test",
+            last_name="User",
+            is_admin=False,
+            created_at=datetime.now(),
+            updated_at=datetime.now(),
+            balance_gb=5.0,
+            total_purchased_gb=10.0,
+            referral_code="REF1234",
+            referred_by=None,
+        )
+        user.activate_consumption_mode()
+        user.deactivate_consumption_mode()
+        assert user.consumption_mode_enabled is False
+
+
 class TestVpnKey:
     """Tests para la entidad VpnKey."""
 

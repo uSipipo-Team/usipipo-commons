@@ -148,6 +148,10 @@ class VpnKey:
         self.used_bytes = 0
         self.billing_reset_at = datetime.now(timezone.utc)
 
+    def set_status(self, status: KeyStatus) -> None:
+        """Sets the key status."""
+        self.status = status
+
     def add_usage(self, bytes_used: int) -> None:
         """Agrega uso de datos."""
         self.used_bytes += bytes_used

@@ -1,18 +1,20 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
-from ..domain.enums.key_type import KeyType  # ← Changed from VpnType
+from ..domain.enums.key_type import KeyType
 from ..domain.enums.key_status import KeyStatus
 
 
 class VpnKeyResponse(BaseModel):
     """Respuesta de clave VPN."""
+    model_config = ConfigDict(from_attributes=True)
+
     id: UUID
     user_id: UUID
     name: str
-    key_type: KeyType  # ← Changed from vpn_type: VpnType
+    key_type: KeyType
     status: KeyStatus
     config: Optional[str] = None
     created_at: datetime
@@ -20,9 +22,6 @@ class VpnKeyResponse(BaseModel):
     last_used_at: Optional[datetime] = None
     data_used_gb: float = Field(ge=0)
     data_limit_gb: float = Field(ge=0)
-
-    class Config:
-        from_attributes = True
 
 
 class CreateVpnKeyRequest(BaseModel):

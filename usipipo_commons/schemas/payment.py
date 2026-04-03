@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 from typing import Optional
 from uuid import UUID
@@ -9,6 +9,8 @@ from ..domain.enums.payment_method import PaymentMethod
 
 class PaymentResponse(BaseModel):
     """Respuesta de pago."""
+    model_config = ConfigDict(from_attributes=True)
+
     id: UUID
     user_id: UUID
     amount_usd: float
@@ -22,9 +24,6 @@ class PaymentResponse(BaseModel):
     expires_at: Optional[datetime] = None
     paid_at: Optional[datetime] = None
     transaction_hash: Optional[str] = None
-
-    class Config:
-        from_attributes = True
 
 
 class CreatePaymentRequest(BaseModel):

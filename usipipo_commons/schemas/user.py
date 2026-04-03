@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 from typing import Optional
 from uuid import UUID
@@ -6,6 +6,8 @@ from uuid import UUID
 
 class UserResponse(BaseModel):
     """Respuesta de usuario."""
+    model_config = ConfigDict(from_attributes=True)
+
     id: UUID
     telegram_id: int
     username: Optional[str]
@@ -18,9 +20,6 @@ class UserResponse(BaseModel):
     total_purchased_gb: float = Field(ge=0)
     referral_code: str
     referred_by: Optional[UUID]
-
-    class Config:
-        from_attributes = True
 
 
 class UserCreateRequest(BaseModel):

@@ -16,7 +16,7 @@ class ConsumptionBilling:
     El ciclo dura 30 días o hasta que se cierre manualmente.
     """
 
-    user_id: int
+    user_id: uuid.UUID
     started_at: datetime
     status: BillingStatus = BillingStatus.ACTIVE
     id: Optional[uuid.UUID] = None
