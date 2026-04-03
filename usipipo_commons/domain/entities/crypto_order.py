@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from uuid import UUID, uuid4
 
@@ -30,7 +30,7 @@ class CryptoOrder:
         wallet_address: str,
     ) -> "CryptoOrder":
         """Crea una nueva orden crypto."""
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         return cls(
             id=uuid4(),
             user_id=user_id,
