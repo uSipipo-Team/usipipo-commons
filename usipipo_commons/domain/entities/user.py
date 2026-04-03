@@ -8,7 +8,7 @@ from uuid import UUID
 class User:
     """Entidad de usuario compartida."""
     id: UUID
-    telegram_id: int
+    telegram_id: Optional[int]
     username: Optional[str]
     first_name: Optional[str]
     last_name: Optional[str]

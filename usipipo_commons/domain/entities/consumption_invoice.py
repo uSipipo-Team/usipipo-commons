@@ -18,7 +18,7 @@ class ConsumptionInvoice:
     """
 
     billing_id: uuid.UUID
-    user_id: int
+    user_id: uuid.UUID
     amount_usd: Decimal
     wallet_address: str  # Dirección de wallet para recibir el pago (solo crypto)
     payment_method: ConsumptionPaymentMethod = ConsumptionPaymentMethod.CRYPTO
