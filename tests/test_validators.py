@@ -51,8 +51,8 @@ class TestValidateVpnKeyName:
         assert validate_vpn_key_name("My VPN") is True
         assert validate_vpn_key_name("work-key") is True
         assert validate_vpn_key_name("personal_1") is True
-        assert validate_vpn_key_name("A") is True
-        assert validate_vpn_key_name("A" * 50) is True
+        assert validate_vpn_key_name("ABC") is True  # Mínimo 3 caracteres
+        assert validate_vpn_key_name("A" * 50) is True  # Máximo 50 caracteres
 
     def test_invalid_vpn_key_names(self):
         """Test con nombres de clave VPN inválidos."""
