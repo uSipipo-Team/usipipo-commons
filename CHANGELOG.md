@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.17.0] - 2026-04-03
+
+### Changed
+
+#### VPN Key Name Validation
+- **`validate_vpn_key_name()`** - Enhanced with strict validation rules
+  - Added `VPN_KEY_NAME_MIN_LENGTH` (3) and `VPN_KEY_NAME_MAX_LENGTH` (50) constants
+  - Added `VPN_KEY_NAME_PATTERN` regex for strict alphanumeric + spaces/hyphens/underscores
+  - Now blocks emoji and unicode confusables
+  - Returns False for empty strings and names outside length range
+
+### Architecture Fix
+- **Removed `get_vpn_key_name_validation_error()`** - Moved to presentation layer (telegram-bot)
+  - Domain layer should not contain UI error messages
+  - Error message generation belongs in client applications
+
+### Impact
+
+This change provides domain-level validation only:
+- ✅ Consistent VPN key naming across all clients
+- ✅ Block problematic characters that could cause issues
+- ✅ Clean architecture - domain layer stays pure
+
+### Technical Details
+- **Files Modified:** 1 (validators.py)
+- **Lines:** +38, -6
+- **Breaking Changes:** None (backward compatible)
+
+---
+
 ## [0.16.0] - 2026-04-03
 
 ### Added
