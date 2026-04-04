@@ -13,7 +13,7 @@ from typing import Any, Dict, Optional
 class AdminOperationResult:
     """
     Result of an administrative operation.
-    
+
     This entity represents the outcome of administrative actions
     and provides standardized response formatting.
     """
@@ -23,4 +23,4 @@ class AdminOperationResult:
     target_id: str
     message: str
     details: Optional[Dict[str, Any]] = None
-    timestamp: Optional[datetime] = field(default_factory=datetime.now)
+    timestamp: datetime = field(default_factory=datetime.now)

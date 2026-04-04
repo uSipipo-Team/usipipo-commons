@@ -8,7 +8,7 @@ from uuid import UUID
 class User:
     """Entidad de usuario compartida."""
     id: UUID
-    telegram_id: Optional[int]
+    telegram_id: int
     username: Optional[str]
     first_name: Optional[str]
     last_name: Optional[str]
@@ -36,9 +36,11 @@ class User:
         """Clear user debt."""
         self.has_pending_debt = False
 
-    def activate_consumption_mode(self) -> None:
-        """Enable consumption mode."""
+    def activate_consumption_mode(self, billing_id: UUID | None = None) -> None:
+        """Enable consumption mode and optionally link to a billing cycle."""
         self.consumption_mode_enabled = True
+        if billing_id is not None:
+            self.current_billing_id = billing_id
 
     def deactivate_consumption_mode(self) -> None:
         """Disable consumption mode."""
