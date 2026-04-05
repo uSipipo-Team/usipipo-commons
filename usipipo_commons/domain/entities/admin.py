@@ -1,69 +1,11 @@
-"""Admin entities for uSipipo ecosystem."""
+"""Admin entities for uSipipo ecosystem.
 
-from dataclasses import dataclass
-from datetime import datetime
-from typing import Dict, Optional
+Re-exports from dedicated modules to maintain backward compatibility.
+"""
 
+from .admin_user_info import AdminUserInfo
+from .admin_key_info import AdminKeyInfo
+from .admin_operation_result import AdminOperationResult
+from .server_status import ServerStatus
 
-@dataclass
-class AdminUserInfo:
-    """Información de usuario para administración."""
-
-    user_id: int
-    username: Optional[str]
-    first_name: str
-    last_name: Optional[str]
-    total_keys: int
-    active_keys: int
-    stars_balance: int = 0
-    total_deposited: int = 0
-    referral_credits: int = 0
-    registration_date: Optional[datetime] = None
-    last_activity: Optional[datetime] = None
-
-
-@dataclass
-class AdminKeyInfo:
-    """Información de clave para administración."""
-
-    key_id: str
-    user_id: int
-    user_name: str
-    key_type: str
-    key_name: str
-    access_url: Optional[str]
-    created_at: datetime
-    last_used: Optional[datetime]
-    data_limit: int
-    data_used: int
-    is_active: bool
-    server_status: str
-
-
-@dataclass
-class ServerStatus:
-    """Estado del servidor VPN."""
-
-    server_type: str
-    is_healthy: bool
-    total_keys: int
-    active_keys: int
-    version: Optional[str]
-    uptime: Optional[str]
-    error_message: Optional[str] = None
-
-
-@dataclass
-class AdminOperationResult:
-    """Resultado de operación administrativa."""
-
-    success: bool
-    operation: str
-    target_id: str
-    message: str
-    details: Optional[Dict] = None
-    timestamp: Optional[datetime] = None
-
-    def __post_init__(self):
-        if self.timestamp is None:
-            self.timestamp = datetime.now()
+__all__ = ["AdminUserInfo", "AdminKeyInfo", "AdminOperationResult", "ServerStatus"]

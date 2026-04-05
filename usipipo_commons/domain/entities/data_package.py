@@ -21,7 +21,7 @@ class PackageType(str, Enum):
 class DataPackage:
     """Entidad que representa un paquete de datos comprado."""
 
-    user_id: int
+    user_id: uuid.UUID
     package_type: PackageType
     data_limit_bytes: int
     stars_paid: int

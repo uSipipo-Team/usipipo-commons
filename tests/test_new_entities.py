@@ -133,10 +133,11 @@ class TestDataPackageExport:
     def test_datapackage_creation(self):
         """Test que se puede instanciar DataPackage."""
         pkg_id = uuid4()
+        user_id = uuid4()
         expires_at = datetime.now(timezone.utc)
-        
+
         pkg = DataPackage(
-            user_id=123456789,
+            user_id=user_id,
             package_type=PackageType.BASIC,
             data_limit_bytes=10 * 1024**3,
             stars_paid=250,
@@ -144,7 +145,7 @@ class TestDataPackageExport:
             id=pkg_id
         )
 
-        assert pkg.user_id == 123456789
+        assert pkg.user_id == user_id
         assert pkg.package_type == PackageType.BASIC
         assert pkg.id == pkg_id
         assert pkg.remaining_bytes == 10 * 1024**3
