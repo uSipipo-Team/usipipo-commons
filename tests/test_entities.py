@@ -243,21 +243,20 @@ class TestConsumptionBilling:
     def test_consumption_billing_creation(self):
         """Test para crear un ciclo de facturación por consumo."""
         billing = ConsumptionBilling(
-            user_id=123456789,
+            user_id=uuid4(),
             started_at=datetime.now(timezone.utc),
             status=BillingStatus.ACTIVE,
             mb_consumed=Decimal("1024.00"),
             price_per_mb_usd=Decimal("0.000244140625"),
         )
 
-        assert billing.user_id == 123456789
         assert billing.status == BillingStatus.ACTIVE
         assert billing.mb_consumed == Decimal("1024.00")
 
     def test_consumption_billing_is_active(self):
         """Test para verificar estado activo."""
         billing = ConsumptionBilling(
-            user_id=123456789,
+            user_id=uuid4(),
             started_at=datetime.now(timezone.utc),
             status=BillingStatus.ACTIVE,
         )
@@ -269,7 +268,7 @@ class TestConsumptionBilling:
     def test_consumption_billing_gb_consumed(self):
         """Test para verificar conversión a GB."""
         billing = ConsumptionBilling(
-            user_id=123456789,
+            user_id=uuid4(),
             started_at=datetime.now(timezone.utc),
             mb_consumed=Decimal("2048.00"),
             price_per_mb_usd=Decimal("0.000244140625"),
@@ -280,7 +279,7 @@ class TestConsumptionBilling:
     def test_consumption_billing_add_consumption(self):
         """Test para agregar consumo."""
         billing = ConsumptionBilling(
-            user_id=123456789,
+            user_id=uuid4(),
             started_at=datetime.now(timezone.utc),
             mb_consumed=Decimal("1024.00"),
             price_per_mb_usd=Decimal("0.000244140625"),
@@ -294,7 +293,7 @@ class TestConsumptionBilling:
     def test_consumption_billing_close_cycle(self):
         """Test para cerrar ciclo de facturación."""
         billing = ConsumptionBilling(
-            user_id=123456789,
+            user_id=uuid4(),
             started_at=datetime.now(timezone.utc),
             status=BillingStatus.ACTIVE,
             mb_consumed=Decimal("2048.00"),
@@ -309,7 +308,7 @@ class TestConsumptionBilling:
     def test_consumption_billing_mark_as_paid(self):
         """Test para marcar como pagado."""
         billing = ConsumptionBilling(
-            user_id=123456789,
+            user_id=uuid4(),
             started_at=datetime.now(timezone.utc),
             status=BillingStatus.CLOSED,
             mb_consumed=Decimal("2048.00"),
@@ -328,13 +327,12 @@ class TestConsumptionInvoice:
         billing_id = uuid4()
         invoice = ConsumptionInvoice(
             billing_id=billing_id,
-            user_id=123456789,
+            user_id=uuid4(),
             amount_usd=Decimal("5.00"),
             wallet_address="0x1234567890abcdef",
             payment_method=ConsumptionPaymentMethod.CRYPTO,
         )
 
-        assert invoice.user_id == 123456789
         assert invoice.amount_usd == Decimal("5.00")
         assert invoice.status == InvoiceStatus.PENDING
 
@@ -343,7 +341,7 @@ class TestConsumptionInvoice:
         billing_id = uuid4()
         invoice = ConsumptionInvoice(
             billing_id=billing_id,
-            user_id=123456789,
+            user_id=uuid4(),
             amount_usd=Decimal("5.00"),
             wallet_address="0x1234567890abcdef",
         )
@@ -357,7 +355,7 @@ class TestConsumptionInvoice:
         billing_id = uuid4()
         invoice = ConsumptionInvoice(
             billing_id=billing_id,
-            user_id=123456789,
+            user_id=uuid4(),
             amount_usd=Decimal("5.00"),
             wallet_address="0x1234567890abcdef",
             payment_method=ConsumptionPaymentMethod.CRYPTO,
@@ -374,7 +372,7 @@ class TestConsumptionInvoice:
         billing_id = uuid4()
         invoice = ConsumptionInvoice(
             billing_id=billing_id,
-            user_id=123456789,
+            user_id=uuid4(),
             amount_usd=Decimal("5.00"),
             wallet_address="N/A",
             payment_method=ConsumptionPaymentMethod.STARS,
@@ -390,7 +388,7 @@ class TestConsumptionInvoice:
         billing_id = uuid4()
         invoice = ConsumptionInvoice(
             billing_id=billing_id,
-            user_id=123456789,
+            user_id=uuid4(),
             amount_usd=Decimal("5.00"),
             wallet_address="0x1234567890abcdef",
             status=InvoiceStatus.PENDING,
@@ -405,7 +403,7 @@ class TestConsumptionInvoice:
         billing_id = uuid4()
         invoice = ConsumptionInvoice(
             billing_id=billing_id,
-            user_id=123456789,
+            user_id=uuid4(),
             amount_usd=Decimal("5.00"),
             wallet_address="0x1234567890abcdef",
             payment_method=ConsumptionPaymentMethod.STARS,
@@ -419,7 +417,7 @@ class TestConsumptionInvoice:
         billing_id = uuid4()
         invoice = ConsumptionInvoice(
             billing_id=billing_id,
-            user_id=123456789,
+            user_id=uuid4(),
             amount_usd=Decimal("5.00"),
             wallet_address="0x1234567890abcdef12345678",
             payment_method=ConsumptionPaymentMethod.CRYPTO,
