@@ -4,6 +4,7 @@ Admin User Info entity for uSipipo Commons.
 This module contains the AdminUserInfo dataclass for administrative user information.
 """
 
+import uuid
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
@@ -13,12 +14,12 @@ from typing import Optional
 class AdminUserInfo:
     """
     Administrative user information.
-    
+
     This entity contains user data displayed in admin panels
     and used for administrative operations.
     """
 
-    user_id: int
+    user_id: uuid.UUID
     username: Optional[str]
     first_name: str
     last_name: Optional[str]
