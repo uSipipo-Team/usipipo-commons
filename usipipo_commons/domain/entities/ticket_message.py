@@ -15,7 +15,7 @@ class TicketMessage:
     """Entidad que representa un mensaje en un ticket."""
 
     ticket_id: uuid.UUID
-    from_user_id: int
+    from_user_id: uuid.UUID
     message: str
     from_admin: bool = False
     id: uuid.UUID = field(default_factory=uuid.uuid4)
