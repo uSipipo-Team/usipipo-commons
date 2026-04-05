@@ -223,7 +223,7 @@ vpn_key.add_usage(1024 * 1024 * 500)  # 500 MB
 Represents user balance in stars (Telegram payment units).
 
 **Properties:**
-- `user_id: int` - User identifier
+- `user_id: UUID` - User identifier
 - `stars: int` - Balance in stars
 
 **Methods:**
@@ -234,8 +234,9 @@ Represents user balance in stars (Telegram payment units).
 **Example:**
 ```python
 from usipipo_commons.domain.entities import Balance
+import uuid
 
-balance = Balance(user_id=123456789, stars=1000)
+balance = Balance(user_id=uuid.uuid4(), stars=1000)
 
 # Add stars
 new_balance = balance.add(500)
@@ -611,7 +612,7 @@ print(invoice.get_payment_instructions())
 Represents a purchased data package.
 
 **Properties:**
-- `user_id: int` - User ID
+- `user_id: UUID` - User ID
 - `package_type: PackageType` - Package type (BASIC, ESTANDAR, AVANZADO, PREMIUM, UNLIMITED)
 - `data_limit_bytes: int` - Data limit in bytes
 - `stars_paid: int` - Stars paid for package
@@ -635,9 +636,10 @@ Represents a purchased data package.
 ```python
 from usipipo_commons.domain.entities import DataPackage, PackageType
 from datetime import datetime, timezone, timedelta
+import uuid
 
 package = DataPackage(
-    user_id=123456789,
+    user_id=uuid.uuid4(),
     package_type=PackageType.PREMIUM,
     data_limit_bytes=50 * 1024**3,  # 50 GB
     stars_paid=5000,
@@ -659,7 +661,7 @@ package.add_usage(5 * 1024**3)  # 5 GB used
 Administrative user information for admin panels.
 
 **Properties:**
-- `user_id: int` - User ID
+- `user_id: UUID` - User ID
 - `username: Optional[str]` - Telegram username
 - `first_name: str` - First name
 - `last_name: Optional[str]` - Last name
@@ -675,9 +677,10 @@ Administrative user information for admin panels.
 ```python
 from usipipo_commons.domain.entities import AdminUserInfo
 from datetime import datetime, timezone
+import uuid
 
 admin_user = AdminUserInfo(
-    user_id=123456789,
+    user_id=uuid.uuid4(),
     username="johndoe",
     first_name="John",
     last_name="Doe",
@@ -694,7 +697,7 @@ Administrative VPN key information for admin panels.
 
 **Properties:**
 - `key_id: str` - Key identifier
-- `user_id: int` - Owner's user ID
+- `user_id: UUID` - Owner's user ID
 - `user_name: str` - Owner's username
 - `key_type: str` - VPN type (outline, wireguard)
 - `key_name: str` - Key name
@@ -710,10 +713,11 @@ Administrative VPN key information for admin panels.
 ```python
 from usipipo_commons.domain.entities import AdminKeyInfo
 from datetime import datetime, timezone
+import uuid
 
 key_info = AdminKeyInfo(
     key_id="key_123",
-    user_id=123456789,
+    user_id=uuid.uuid4(),
     user_name="johndoe",
     key_type="outline",
     key_name="Home VPN",
@@ -790,7 +794,7 @@ if result.success:
 Support ticket entity.
 
 **Properties:**
-- `user_id: int` - User who created ticket
+- `user_id: UUID` - User who created ticket
 - `category: TicketCategory` - Ticket category (VPN_FAIL, PAYMENT, ACCOUNT, OTHER)
 - `priority: TicketPriority` - Priority (HIGH, MEDIUM, LOW)
 - `subject: str` - Ticket subject
@@ -799,7 +803,7 @@ Support ticket entity.
 - `created_at: datetime` - Creation timestamp
 - `updated_at: datetime` - Last update timestamp
 - `resolved_at: Optional[datetime]` - Resolution timestamp
-- `resolved_by: Optional[int]` - Admin who resolved
+- `resolved_by: Optional[UUID]` - Admin who resolved
 - `admin_notes: Optional[str]` - Admin internal notes
 
 **Properties:**
@@ -817,7 +821,7 @@ from usipipo_commons.domain.entities import Ticket, TicketCategory, TicketPriori
 import uuid
 
 ticket = Ticket(
-    user_id=123456789,
+    user_id=uuid.uuid4(),
     category=TicketCategory.VPN_FAIL,
     priority=TicketPriority.HIGH,
     subject="Cannot connect to VPN",
@@ -836,7 +840,7 @@ Message within a support ticket.
 
 **Properties:**
 - `ticket_id: UUID` - Parent ticket ID
-- `from_user_id: int` - Message sender ID
+- `from_user_id: UUID` - Message sender ID
 - `message: str` - Message content
 - `from_admin: bool` - True if sent by admin
 - `id: UUID` - Unique message identifier
@@ -849,7 +853,7 @@ import uuid
 
 message = TicketMessage(
     ticket_id=uuid.uuid4(),
-    from_user_id=123456789,
+    from_user_id=uuid.uuid4(),
     message="I'm still having issues connecting",
     from_admin=False,
 )

@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.20.0] - 2026-04-05
+
+### Changed
+- **AdminUserInfo** - Changed `user_id` from `int` to `UUID` for multi-client support
+- **AdminKeyInfo** - Changed `user_id` from `int` to `UUID` for multi-client support
+- **Balance** - Changed `user_id` from `int` to `UUID` for multi-client support
+- **DataPackage** - Changed `user_id` from `int` to `UUID` for multi-client support
+- **Ticket** - Changed `user_id` and `resolved_by` from `int` to `UUID`
+- **TicketMessage** - Changed `from_user_id` from `int` to `UUID`
+- **admin.py** - Replaced duplicate class definitions with re-exports from dedicated modules
+
+---
+
 ## [0.18.0] - 2026-04-03
 
 ### Added
