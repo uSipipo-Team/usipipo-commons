@@ -1,5 +1,6 @@
 """Balance entity for uSipipo payment system."""
 
+import uuid
 from dataclasses import dataclass
 
 
@@ -11,7 +12,7 @@ class Balance:
     El saldo se mide en 'stars' (unidades de pago de Telegram).
     """
 
-    user_id: int
+    user_id: uuid.UUID
     stars: int = 0
 
     def __post_init__(self):
