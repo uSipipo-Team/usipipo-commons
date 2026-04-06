@@ -494,3 +494,19 @@ class TestCryptoOrder:
         assert CryptoOrderStatus.COMPLETED.value == "completed"
         assert CryptoOrderStatus.FAILED.value == "failed"
         assert CryptoOrderStatus.EXPIRED.value == "expired"
+
+
+class TestKeyType:
+    """Tests para el enum KeyType."""
+
+    def test_trusttunnel_key_type_exists(self):
+        """Test para verificar que TRUSTTUNNEL existe en KeyType."""
+        assert KeyType.TRUSTTUNNEL == "trusttunnel"
+        assert KeyType.TRUSTTUNNEL.value == "trusttunnel"
+
+    def test_all_key_types(self):
+        """Test para verificar todos los tipos de VPN."""
+        assert len(KeyType) == 3
+        assert KeyType.OUTLINE == "outline"
+        assert KeyType.WIREGUARD == "wireguard"
+        assert KeyType.TRUSTTUNNEL == "trusttunnel"
