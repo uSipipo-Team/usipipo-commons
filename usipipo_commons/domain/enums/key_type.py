@@ -8,3 +8,4 @@ class KeyType(str, Enum):
 
     OUTLINE = "outline"
     WIREGUARD = "wireguard"
+    TRUSTTUNNEL = "trusttunnel"
