@@ -1,5 +1,3 @@
-"""VPN Key entity - Ported from monorepo."""
-
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Optional
@@ -31,7 +29,7 @@ class VpnKey:
 
     # Estado y fechas
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
-    
+
     # ← is_active is now a property based on status
 
     # Métricas de uso (sincronizadas desde los servidores VPN)
@@ -41,6 +39,10 @@ class VpnKey:
     data_limit_bytes: int = 5 * 1024**3  # 5 GB por defecto
     billing_reset_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     expires_at: Optional[datetime] = None  # Fecha de expiración de la clave
+
+    # WireGuard IP allocation (optional)
+    ip_address: Optional[str] = None  # IPv4 address string (INET)
+    ip_last_octet: Optional[int] = None  # Last octet for quick lookup
 
     def __post_init__(self):
         """
@@ -104,17 +106,17 @@ class VpnKey:
     @property
     def used_mb(self) -> float:
         """Calcula el uso en MB."""
-        return self.used_bytes / (1024 ** 2)
+        return self.used_bytes / (1024**2)
 
     @property
     def used_gb(self) -> float:
         """Calcula el uso en GB."""
-        return self.used_bytes / (1024 ** 3)
+        return self.used_bytes / (1024**3)
 
     @property
     def data_limit_gb(self) -> float:
         """Calcula el límite de datos en GB."""
-        return self.data_limit_bytes / (1024 ** 3)
+        return self.data_limit_bytes / (1024**3)
 
     @property
     def remaining_bytes(self) -> int:
@@ -175,4 +177,6 @@ class VpnKey:
             "used_bytes": self.used_bytes,
             "data_limit_bytes": self.data_limit_bytes,
             "billing_reset_at": self.billing_reset_at.isoformat(),
+            "ip_address": self.ip_address,
+            "ip_last_octet": self.ip_last_octet,
         }
